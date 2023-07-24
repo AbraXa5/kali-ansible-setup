@@ -129,7 +129,7 @@ Role are located at `roles/<role_name>`. Each role has a directory structure sim
 ```
 
 -   `defaults` will contain default values for all variables
--   `var` also can contain values for variables used in the playbook but these have more precedence than default.
+-   `vars` also contains values for variables used in the playbook but these have more precedence than default.
     -   **If you need to change any variable values, this is where you do it**. _Only inline vars or command line assignment have greater precedence than the `var/main.yml` file_.
 -   The files directory will contain files to be copied to the remote host
 -   `tasks` is where the actual tasks are
