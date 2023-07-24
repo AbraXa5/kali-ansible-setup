@@ -1,0 +1,23 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: mixed-line-ending
+        args:
+          - --fix=lf
+      - id: pretty-format-json
+        args:
+          - --autofix
+      - id: check-yaml
+      - id: detect-private-key
+
+  # Ansible hooks
+  - repo: https://github.com/ansible/ansible-lint.git
+    rev: v6.17.2
+    hooks:
+      - id: ansible-lint
