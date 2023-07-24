@@ -25,8 +25,8 @@ ansible-galaxy role install --force -r requirements.yml
 
 ### Inventory
 
-By default the playbook is set to run against all hosts defined in the `hosts.ini` file as per teh `ansible.cfg` file
-By default ansible connects to the host with the username the playbook is run as, if this user doesn;t exist on the host then it can be defined in the inventory files as `ansible_user`
+By default the playbook is set to run against all hosts defined in the `hosts.ini` file as per the `ansible.cfg` file
+By default ansible connects to the host with the username the playbook is run as, if this user doesn't exist on the host then it can be defined in the inventory files as `ansible_user`
 
 To add/ edit hosts, edit the inventory file, for example
 
@@ -66,7 +66,7 @@ Host kali.vm
 
 Now ansible knows how to connect to the host via SSH using the identity key
 
-If you don't want to setup authN keys, password based authN can be done by setting these variables and installing the sshpass package
+If you don't want to setup authN keys, password based authN can be done by setting these variables and installing the `sshpass` package
 
 -   ansible_host
 -   ansible_user
@@ -98,16 +98,49 @@ ansible-playbook main.yml --limit=local -K
 The playbook has multiple roles with multiple tasks
 
 -   first_run
-  -   Change Kali repo and add https support
+    -   Change Kali repo and add https support
 -   dotfiles
-  -   Install my [dotfiles](https://github.com/AbraXa5/dotfiles)
+    -   Install my [dotfiles](https://github.com/AbraXa5/dotfiles)
 -   install_tools
+    -   Install/ download required tools and binaries
 -   customizations
-  -   Customize xfce4 panel, power settings and browser
+    -   Customize xfce4 panel, power settings and browser
 -   notes
-  -   Clone my notes from private repos
+    -   Clone my notes from private repos
 
 This playbook setups my VM as per my preferences, and also uses private keys in certain roles (for example, notes), so comment out/ remove the roles you don't want from `main.yml` or `setup_kali.yml`.
+
+### Customizing Roles
+
+Role are located at `roles/<role_name>`. Each role has a directory structure similar to
+
+```
+├── defaults
+│   └── main.yml
+├── files
+├── README.md
+├── tasks
+│   |── task1.yml
+│   |── task2.yml
+│   |── task3.yml
+│   └── main.yml
+└── vars
+    └── main.yml
+```
+
+-   `defaults` will contain default values for all variables
+-   `var` also can contain values for variables used in the playbook but these have more precedence than default.
+    -   **If you need to change any variable values, this is where you do it**. _Only inline vars or command line assignment have greater precedence than the `var/main.yml` file_.
+-   The files directory will contain files to be copied to the remote host
+-   `tasks` is where the actual tasks are
+    -   The `tasks/main.yml` is the main file which imports/ includes all other tasks in the roles
+    -   Individual tasks cab be omitted from here
+
+Post customization you can list all available tasks using the command
+
+```sh
+ansible-playbook main.yml --list-tasks
+```
 
 ## Executing the playbook
 
