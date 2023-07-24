@@ -1,0 +1,73 @@
+# roles/install_tools/tasks/main.yml
+---
+- name: Install Tools via apt
+  become: true
+  tags: tools
+  ansible.builtin.import_tasks: install_tools_apt.yml
+
+- name: Clone github repos
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: github
+  ansible.builtin.import_tasks: clone_github_tools.yml
+
+- name: Download binaries
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: tools
+  ansible.builtin.import_tasks: install_cargo.yml
+
+- name: Install Cargo
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: tools
+  ansible.builtin.import_tasks: download_binaries.yml
+
+- name: Setup Docker
+  become: true
+  tags: docker
+  ansible.builtin.import_tasks: install_docker.yml
+
+- name: Install GoLang
+  become: true
+  tags:
+    - golang
+    - tools
+  ansible.builtin.import_tasks: install_golang.yml
+
+- name: Install NVM
+  become: true
+  tags:
+    - nvm
+    - tools
+  ansible.builtin.import_tasks: install_nvm.yml
+
+- name: Install pipx
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: pipx
+  ansible.builtin.import_tasks: install_pipx.yml
+
+- name: Install FZF
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: docker
+  ansible.builtin.import_tasks: install_fzf.yml
+
+- name: Install Bloodhound
+  become: true
+  tags: tools
+  ansible.builtin.import_tasks: install_bloodhound.yml
+
+- name: Setup Wordlists
+  become: true
+  tags: wordlists
+  ansible.builtin.import_tasks: setup_wordlists.yml
+
+- name: Fix Evil WinRM
+  become: true
+  ansible.builtin.import_tasks: fix_evil_winrm.yml
+
+- name: Update Database
+  become: true
+  ansible.builtin.import_tasks: update_db.yml

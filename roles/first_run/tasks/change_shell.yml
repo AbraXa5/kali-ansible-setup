@@ -1,0 +1,17 @@
+# roles/first_run/tasks/change_shell.yml
+---
+- name: Install zsh
+  become: true
+  ansible.builtin.apt:
+    name:
+      - zsh
+    state: latest
+  # noqa: package-latest
+
+- name: "Change shell to zsh for {{ ansible_user }}"
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    shell: /usr/bin/zsh
+
+- name: Reset connection
+  ansible.builtin.meta: reset_connection

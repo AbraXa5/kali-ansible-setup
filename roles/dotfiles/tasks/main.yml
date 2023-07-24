@@ -1,0 +1,10 @@
+# roles/notes/tasks/main.yml
+---
+- name: Install Tools
+  become: true
+  ansible.builtin.import_tasks: install_tools.yml
+
+- name: Clone dotfiles
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.import_tasks: install_tools.yml

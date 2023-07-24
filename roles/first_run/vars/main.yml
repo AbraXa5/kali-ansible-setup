@@ -1,0 +1,11 @@
+---
+# vars file for first_run
+# timezone
+timezone: "Asia/Calcutta"
+
+# regenrate_ssh_keys
+regen_ssh_keys: false
+
+default_keys_dir: "/etc/ssh/default_kali_keys/"
+src_dir: "/etc/ssh"
+pattern: "ssh_host_*"

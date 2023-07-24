@@ -1,0 +1,69 @@
+---
+- name: Clone the bare repository
+  ansible.builtin.git:
+    repo: "{{  dotfiles_repo }}"
+    dest: "{{ dotfiles_dest }}"
+    version: "{{ dotfiles_version }}"
+    bare: true
+  register: git_clone
+
+- name: Attempt to checkout
+  ansible.builtin.command:
+    cmd: "git --git-dir={{ dotfiles_dest }} --work-tree={{ ansible_facts['user_dir'] }} checkout"
+  ignore_errors: true
+  register: dotfiles_checkout
+  # noqa: no-changed-when
+  # noqa: command-instead-of-module
+
+- name: Handle conflicting dotfiles
+  block:
+    - name: Parse the output to get the list of conflicting files
+      ansible.builtin.set_fact:
+        conflicting_files: "{{ dotfiles_checkout.stderr | regex_findall('\\t(.*?\\n)', '\\t', '\\n') | map('regex_replace', '\\n$', '') | list }}"
+      when: dotfiles_checkout is failed
+
+    - name: Check conflicting files
+      ansible.builtin.debug:
+        var: conflicting_files
+
+    - name: Copy dotfiles to backup directory
+      ansible.builtin.copy:
+        src: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+        dest: "/tmp/.dotfiles-backup/"
+        remote_src: true
+        mode: "0755"
+      loop: "{{ conflicting_files }}"
+      register: copied_files
+
+    - name: Remove original dotfiles
+      ansible.builtin.file:
+        path: "{{ ansible_facts['user_dir'] }}/{{ item }}"
+        state: absent
+      loop: "{{ copied_files.results | map(attribute='item') | list }}"
+      when: copied_files.changed
+      register: resolve_conflicts
+
+    - name: Retry checkout
+      ansible.builtin.command:
+        cmd: "git --git-dir={{ dotfiles_dest }} --work-tree={{ ansible_facts['user_dir'] }} checkout"
+      ignore_errors: false
+      register: checkout_retry
+      when: resolve_conflicts
+      # noqa: no-changed-when
+      # noqa: command-instead-of-module
+
+- name: Set git config value
+  ansible.builtin.command:
+    cmd: git --git-dir="{{ dotfiles_dest }}" --work-tree="{{ ansible_facts['user_dir'] }}" config status.showUntrackedFiles no
+  # noqa: no-changed-when
+  # noqa: command-instead-of-module
+#
+# - name: Set git config value
+#   community.general.git_config:
+#     scope: local
+#     name: status.showUntrackedFiles
+#     value: no
+#     repo: "{{ dotfiles_dest }}"
+#   environment:
+#     GIT_DIR: "{{ dotfiles_dest }}"
+#     GIT_WORK_TREE: "{{ ansible_facts['user_dir'] }}"

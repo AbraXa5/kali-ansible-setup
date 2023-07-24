@@ -1,0 +1,68 @@
+# roles/install_tools/tasks/fix_evil_winrm.yml
+---
+- name: Ruby readline check
+  ansible.builtin.stat:
+    path: "/opt/ruby-{{ ruby_version }}/ext/readline/readline.so"
+  register: readline_status
+
+- name: Patch ruby
+  when: not readline_status.stat.exists
+  block:
+    - name: Install libreadline-dev
+      ansible.builtin.apt:
+        name: libreadline-dev
+        state: latest
+      # noqa: package-latest
+
+    - name: Install rb-readline and ffi gem
+      community.general.gem:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - rb-readline
+        - ffi
+
+    - name: Download ruby source code
+      ansible.builtin.get_url:
+        url: "https://ftp.ruby-lang.org/pub/ruby/{{ ruby_version.split('.')[0:2] | join('.') }}/ruby-{{ ruby_version }}.tar.gz"
+        dest: "/tmp/ruby-{{ ruby_version }}.tar.gz"
+        mode: "0755"
+
+    - name: Extract ruby archive
+      ansible.builtin.unarchive:
+        remote_src: true
+        src: "/tmp/ruby-{{ ruby_version }}.tar.gz"
+        dest: "/opt/"
+
+    - name: Compile Ruby extension
+      ansible.builtin.shell:
+        chdir: "/opt/ruby-{{ ruby_version }}/ext/readline"
+        cmd: |
+          ruby ./extconf.rb
+          make
+        creates: "readline.so"
+      check_mode: false
+
+    - name: Patch existing ruby readline extension
+      ansible.builtin.copy:
+        remote_src: true
+        src: "/opt/ruby-{{ ruby_version }}/ext/readline/readline.so"
+        dest: "/usr/lib/x86_64-linux-gnu/ruby/{{ ruby_version.split('.')[0:2] | join('.') }}.0/readline.so"
+        force: true
+        backup: true
+        mode: "0644"
+  rescue:
+    - name: Send discord notification
+      community.general.discord:
+        webhook_id: "1132408363796398204"
+        webhook_token: "raE9XnDXqiKqTW_K-kNR7yFK3bsVrLYjtmi4W5tuvXHRF0OY_tVvxZzWji6Lr6gLJPT5"
+        content: "The playbook failed on {{ ansible_hostname }}, task: fix_evil-winrm"
+        avatar_url: "https://docs.ansible.com/ansible/latest/_static/images/logo_invert.png"
+        username: Ansible
+    # - name: Send failure notification
+    #   community.general.mail:
+    #     subject: "Playbook failed"
+    #     body: "The playbook failed on {{ ansible_hostname }}"
+    #     to: "<your-email@example.com>"
+    #     from: "ansible@niflehiem.online"
+    #     host: "mail.niflehiem.online"

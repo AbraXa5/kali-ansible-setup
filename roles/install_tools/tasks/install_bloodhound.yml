@@ -1,0 +1,53 @@
+# roles/install_tools/tasks/install_bloodhound.yml
+---
+- name: Install bloodhound from Kali repos, also installs neo4j
+  become: true
+  ansible.builtin.apt:
+    name:
+      - bloodhound
+    state: latest
+  # noqa: package-latest
+
+- name: Create Colllector Directory
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.file:
+    path: "/home/{{ ansible_user }}/Tools/Bloodhound-Collectors/"
+    state: directory
+    mode: "0755"
+  register: create_collector_dir
+
+- name: Download collectors
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "/home/{{ ansible_user }}/Tools/Bloodhound-Collectors/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.exe
+    - https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.ps1
+  # TODO: Find a better and idempotent way to do this, other than using stat
+  # noqa: no-handler
+  # when: create_collector_dir.changed
+
+- name: Download from releases
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/{{ bloodhound_version }}/BloodHound-{{ arch }}.zip"
+    dest: "/tmp/bloodhound-{{ arch }}.zip"
+    mode: "0755"
+  when: true
+  register: download_archive
+
+- name: Extract downloaded archive
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: "/tmp/bloodhound-{{ arch }}.zip"
+    dest: "/home/{{ ansible_user }}/Tools/"
+    creates: "/home/{{ ansible_user }}/Tools/bloodhound-{{ arch }}"
+  when: download_archive.changed
+# noqa: no-handler

@@ -1,0 +1,71 @@
+# roles/install_tools/tasks/setup_wordlists.yml
+---
+- name: Install seclists
+  become: true
+  ansible.builtin.apt:
+    name:
+      - seclists
+    state: present
+
+- name: Create OneListForAll Directory
+  become: true
+  ansible.builtin.file:
+    path: "/usr/share/OneListForAll"
+    state: directory
+    mode: "0777"
+  register: create_onelistforall_directory
+
+- name: Download OneListForAll short and micro lists
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "/usr/share/OneListForAll/{{ item | basename }}"
+    mode: "0777"
+  loop:
+    - https://raw.githubusercontent.com/six2dez/OneListForAll/main/onelistforallshort.txt
+    - https://raw.githubusercontent.com/six2dez/OneListForAll/main/onelistforallmicro.txt
+  # when: create_onelistforall_directory.changed
+  # noqa: no-handler
+
+- name: Extract rockyou.txt archives
+  become: true
+  ansible.builtin.command: extract "{{ item }}"
+  args:
+    creates: "{{ item | splitext | first }}"
+  loop:
+    - "/usr/share/wordlists/rockyou.txt.gz"
+
+- name: Create big-list-of-naughty-strings Directory
+  become: true
+  ansible.builtin.file:
+    path: "/usr/share/big-list-of-naughty-strings"
+    state: directory
+    mode: "0777"
+  register: create_blns_directory
+
+- name: Download BLNS worslist
+  become: true
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "/usr/share/big-list-of-naughty-strings/{{ item | basename }}"
+    mode: "0777"
+  loop:
+    - https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.txt
+    - https://raw.githubusercontent.com/minimaxir/big-list-of-naughty-strings/master/blns.json
+  # TODO: Imporve this
+  when: create_blns_directory.changed
+# noqa: no-handler
+
+- name: Create symlink for wordlists
+  become: true
+  ansible.builtin.file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - src: "/usr/share/OneListForAll"
+      dest: "/usr/share/wordlists/OneListForAll"
+    - src: "/usr/share/big-list-of-naughty-strings"
+      dest: "/usr/share/wordlists/blns"
+    - src: "/usr/share/wordlists"
+      dest: "/home/{{ ansible_user }}/wordlists"

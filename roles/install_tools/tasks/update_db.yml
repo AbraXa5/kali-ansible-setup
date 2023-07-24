@@ -1,0 +1,11 @@
+# roles/install_tools/tasks/update_db.yml
+---
+- name: Remove wanted dependencies and clean cache
+  ansible.builtin.apt:
+    autoclean: true
+    autoremove: true
+
+# FIXME: Determine a condition for changed when
+- name: Update local Database
+  ansible.builtin.command: updatedb
+  changed_when: true

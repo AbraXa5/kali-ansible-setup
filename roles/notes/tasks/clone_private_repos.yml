@@ -1,0 +1,19 @@
+# roles/notes/tasks/clone_private_repos.yml
+---
+- name: Check if private keys exists
+  ansible.builtin.find:
+    paths: "{{ ansible_facts['user_dir'] }}/.ssh"
+    patterns:
+      - "[htb|thm|ctf|digitalGarden]_github*"
+  register: identiy_keys
+
+- name: Clone private repos
+  ansible.builtin.git:
+    repo: "{{ item }}"
+    dest: "/home/{{ ansible_user }}/{{ item.split('/')[-1].replace('.git', '') }}"
+    update: true
+    single_branch: false
+    accept_newhostkey: true
+  loop: "{{ private_repos }}"
+  when: identiy_keys.files | length > 0
+# noqa: latest

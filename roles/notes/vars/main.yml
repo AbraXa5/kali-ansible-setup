@@ -1,0 +1,7 @@
+---
+# vars file for notes
+private_repos:
+  - "https://github.com/AbraXa5/HTB"
+  - "https://github.com/AbraXa5/THM"
+  - "https://github.com/AbraXa5/CTFs"
+  - "https://github.com/AbraXa5/DigitalGarden"

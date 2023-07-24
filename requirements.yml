@@ -1,0 +1,10 @@
+# ansible-galaxy collection install --upgrade -r requirements.yml
+# ansible-galaxy role install --force -r requirements.yml
+---
+collections:
+  - community.general
+  - community.docker
+
+roles:
+  - src: iesplin.burp_suite
+  - src: iesplin.vscode

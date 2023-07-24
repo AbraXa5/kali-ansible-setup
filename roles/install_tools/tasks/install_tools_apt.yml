@@ -1,0 +1,88 @@
+# roles/install_tools/tasks/install_tools_apt.yml
+---
+- name: Install base packages and dependencies
+  tags: install_tools
+  become: true
+  ansible.builtin.apt:
+    name:
+      - "{{ item }}"
+    state: latest
+  loop:
+    - git
+    - curl
+    - wget
+    - nmap
+    - unzip
+    - python3
+    # - python3.9
+    - python3-pip
+    - python3-venv
+    - libc6-dev-i386
+    # for naabu
+    - libpcap-dev
+    #  for massdns
+    - libldns-dev
+    # Installing pycurl against openssl for wfuzz
+    - libcurl4-openssl-dev
+    - python3-pycurl
+    - avahi-daemon
+    - libwacom-common
+    # zlib dependency for pillow
+    - libjpeg-dev
+    - libpng-dev
+    - libssl-dev
+    - libffi-dev
+# noqa: package-latest
+
+- name: Install additional helper packages
+  tags: install_tools
+  become: true
+  ansible.builtin.apt:
+    name:
+      - "{{ item }}"
+    state: latest
+  loop:
+    - micro
+    - neovim
+    - tmux
+    - terminator
+    - bat
+    - exa
+    - gh
+    - htop
+    - silversearcher-ag
+    - xclip
+    - ncdu
+    - nnn
+    - peco
+    - jq
+    - yq
+    # - chromium
+    - ltrace
+    - extract
+    - toilet
+    - fortune-mod
+# noqa: package-latest
+
+- name: Install infosec Tools
+  tags: install_tools
+  become: true
+  ansible.builtin.apt:
+    name:
+      - "{{ item }}"
+    state: latest
+  loop:
+    - ffuf
+    - rubygems
+    - evil-winrm
+    - pngcheck
+    - steghide
+    - wfuzz
+    # - insomnia
+    # - hopper-v4
+    - gdu
+    - remmina
+    - feroxbuster
+    - dex2jar
+    - ghidra
+# noqa: package-latest

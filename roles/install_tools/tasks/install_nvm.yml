@@ -1,0 +1,35 @@
+# roles/install_tools/tasks/install_nvm.yml
+---
+- name: Check if nvm directory exists
+  ansible.builtin.stat:
+    path: "{{ nvm_dir }}"
+  register: nvm_dir_stat
+
+- name: Install NVM
+  environment:
+    NVM_DIR: "{{ nvm_dir }}"
+  when: not nvm_dir_stat.stat.exists
+  block:
+    - name: Download nvm install script
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh"
+        dest: "/tmp/nvm_install.sh"
+        mode: "0755"
+
+    - name: Install nvm
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.command: "/tmp/nvm_install.sh"
+      args:
+        creates: "{{ nvm_dir }}/nvm.sh"
+
+    - name: Add NVM environment variables to .zshrc
+      become: true
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.blockinfile:
+        path: "/home/{{ ansible_user }}/.zshrc"
+        block: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+        backup: true

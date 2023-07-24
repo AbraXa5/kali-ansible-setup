@@ -1,0 +1,52 @@
+---
+# - name: Configure Kali
+#   hosts: all
+#   gather_facts: true
+#   roles:
+#     - first_run
+#     - install_tools
+#     - customizations
+- name: Configure Kali
+  hosts: all
+  gather_facts: true
+  vars:
+    new_vm: true
+    setup_dotfiles: false
+    clone_notes: false
+    customize: true
+
+  tasks:
+    - name: Execute roles
+      block:
+        - name: First run
+          ansible.builtin.include_role:
+            name: first_run
+          when: new_vm
+
+        - name: Setup dotfiles
+          ansible.builtin.include_role:
+            name: dotfiles
+          when: setup_dotfiles
+
+        - name: Install tools
+          ansible.builtin.include_role:
+            name: install_tools
+
+        - name: Customizations
+          ansible.builtin.include_role:
+            name: customizations
+          when: customize
+
+        - name: Clone personal notes
+          ansible.builtin.include_role:
+            name: notes
+          when: clone_notes
+
+      rescue:
+        - name: Send discord notification
+          community.general.discord:
+            webhook_id: "1132408363796398204"
+            webhook_token: "raE9XnDXqiKqTW_K-kNR7yFK3bsVrLYjtmi4W5tuvXHRF0OY_tVvxZzWji6Lr6gLJPT5"
+            content: "Playbook failed on {{ ansible_hostname }} during the task ```json\n{{ ansible_failed_task | to_nice_json }}\n```"
+            avatar_url: "https://docs.ansible.com/ansible/latest/_static/images/logo_invert.png"
+            username: Ansible

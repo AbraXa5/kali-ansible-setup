@@ -1,0 +1,15 @@
+# roles/first_run/tasks/maintain.yml
+---
+- name: Remove useless packages from cache
+  ansible.builtin.apt:
+    autoclean: true
+
+- name: Remove unwanted package dependencies
+  ansible.builtin.apt:
+    autoremove: true
+
+# FIXME: Determine a condition for changed when
+- name: Update local Database
+  ansible.builtin.command: updatedb
+  register: updatedb_output
+  changed_when: "'Database updated' in updatedb_output.stdout"

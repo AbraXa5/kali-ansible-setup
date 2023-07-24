@@ -1,0 +1,15 @@
+# roles/install_tools/tasks/clone_github_tools.yml
+---
+- name: Clone repos to Tools w/o history
+  tags:
+    - github_repos
+    - install_tools
+  ansible.builtin.git:
+    repo: "{{ item }}"
+    dest: "/home/{{ ansible_user }}/Tools/{{ item.split('/')[-1].replace('.git', '') }}"
+    update: true
+    depth: 1
+    single_branch: true
+    accept_newhostkey: true
+  loop: "{{ github_repos }}"
+# noqa: latest

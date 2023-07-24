@@ -1,0 +1,9 @@
+# roles/first_run/tasks/upgrade.yml
+---
+- name: Update and upgrade
+  ansible.builtin.apt:
+    upgrade: full
+    update_cache: true
+    autoclean: true
+    autoremove: true
+    cache_valid_time: 3600

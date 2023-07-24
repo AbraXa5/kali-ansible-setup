@@ -1,0 +1,180 @@
+---
+# vars file for install_tools
+# download_binaries
+tools_dir: "/home/{{ ansible_user }}/Tools"
+peas_version: "20230319"
+chisel_version: "1.8.1"
+pspy_version: "1.2.1"
+mimikatz_version: "2.2.0-20220919"
+aquatone_version: "1.7.0"
+jython_version: "2.7.3"
+burpsuite_version: "2023.2.4"
+
+# fix_evil-winrm
+ruby_version: "3.1.2"
+
+# Github repos to clone
+github_repos:
+  - "https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git"
+  - "https://github.com/diego-treitos/linux-smart-enumeration.git"
+  - "https://github.com/mzet-/linux-exploit-suggester.git"
+  - "https://github.com/rebootuser/LinEnum.git"
+  - "https://github.com/CiscoCXSecurity/enum4linux.git"
+  - "https://github.com/cddmp/enum4linux-ng.git"
+  - "https://github.com/bitsadmin/wesng.git"
+  - "https://github.com/jaeles-project/gospider.git"
+  - "https://github.com/BlackArch/wordlistctl.git"
+  - "https://github.com/ticarpi/jwt_tool.git"
+  - "https://github.com/Srinivas11789/PcapXray.git"
+  - "https://github.com/mzfr/liffy.git"
+  - "https://github.com/D35m0nd142/LFISuite.git"
+  - "https://github.com/jcesarstef/dotdotslash.git"
+  - "https://github.com/codingo/NoSQLMap.git"
+  - "https://github.com/codingo/Interlace.git"
+  - "https://github.com/wagoodman/dive.git"
+  - "https://github.com/stealthcopter/deepce.git"
+  - "https://github.com/s0md3v/Photon.git"
+  - "https://github.com/s0md3v/Decodify.git"
+  - "https://github.com/s0md3v/XSStrike.git"
+  # - "https://github.com/jpillora/chisel.git"
+  - "https://github.com/evilpacket/DVCS-Pillage.git"
+  - "https://github.com/techgaun/github-dorks.git"
+  - "https://github.com/internetwache/GitTools.git"
+  - "https://github.com/UnkL4b/GitMiner.git"
+  - "https://github.com/GONZOsint/gitrecon.git"
+  - "https://github.com/HightechSec/git-scanner.git"
+  - "https://github.com/sharsil/mailcat.git"
+  - "https://github.com/Dionach/CMSmap.git"
+  - "https://github.com/ajinabraham/CMSScan.git"
+  - "https://github.com/Tuhinshubhra/CMSeeK.git"
+  - "https://github.com/commixproject/commix.git"
+  - "https://github.com/Mebus/cupp.git"
+  - "https://github.com/immunIT/drupwn.git"
+  - "https://github.com/SECFORCE/SNMP-Brute.git"
+  - "https://github.com/antonioCoco/ConPtyShell.git"
+  - "https://github.com/flozz/p0wny-shell.git"
+  - "https://github.com/antonioCoco/RunasCs.git"
+  - "https://github.com/mrts/burp-suite-http-proxy-history-converter.git"
+  - "https://github.com/SecureAuthCorp/impacket.git"
+  - "https://github.com/The-Viper-One/ActiveDirectoryAttackTool.git"
+  - "https://github.com/adrecon/ADRecon.git"
+  - "https://github.com/WithSecureLabs/chainsaw.git"
+  - "https://github.com/breenmachine/RottenPotatoNG.git"
+  # "TODO: Add juciy potato and juicypotatoNG"
+  - "https://github.com/synacktiv/php_filter_chain_generator.git"
+  - "https://github.com/christophetd/cloudflair.git"
+  - "https://github.com/swisskyrepo/SSRFmap.git"
+  - "https://github.com/carlospolop/fuzzhttpbypass.git"
+  - "https://github.com/tarunkant/Gopherus.git"
+  - "https://github.com/incredibleindishell/SSRF_Vulnerable_Lab.git"
+  - "https://github.com/epinna/tplmap.git"
+  # - "https://github.com/nccgroup/ScoutSuite.git"
+  # - "https://github.com/RhinoSecurityLabs/cloudgoat.git"
+  # - "https://github.com/joshlarsen/aws-recon.git"
+  # - "https://github.com/duo-labs/cloudmapper.git"
+  # - "https://github.com/nccgroup/aws-inventory.git"
+  - "https://github.com/carlospolop/PurplePanda.git"
+  # - "https://github.com/1N3/IntruderPayloads.git"
+  # - "https://github.com/joaomatosf/jexboss.git"
+  # - "https://github.com/frohoff/ysoserial"
+  # - "https://github.com/pwntester/ysoserial.net"
+  # - "https://github.com/EnableSecurity/wafw00f.git"
+  - "https://github.com/samratashok/nishang.git"
+
+# install_cargo
+cargo_dir: "/home/{{ ansible_user }}/.cargo"
+
+# install_docker
+pull_docker_images: false
+docker_images:
+  - metasploitframework/metasploit-framework
+  - rflathers/impacket
+  - rflathers/nginxserve
+  - tleemcjr/metasploitable2
+  - acgpiano/sqli-labs
+  - eystsen/vulnerablewordpress
+
+# install_fzf
+fzf_dir: "/home/{{ ansible_user }}/.fzf"
+
+# install_golang
+golang_tools_repos:
+  - github.com/tomnomnom/gron
+  - github.com/tomnomnom/httprobe
+  - github.com/tomnomnom/assetfinder
+  - github.com/tomnomnom/meg
+  - github.com/tomnomnom/unfurl
+  - github.com/tomnomnom/waybackurls
+  - github.com/tomnomnom/gf
+  - github.com/tomnomnom/anew
+  - github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+  - github.com/projectdiscovery/httpx/cmd/httpx
+  # - github.com/projectdiscovery/simplehttpserver/cmd/simplehttpserver
+  - github.com/projectdiscovery/naabu/v2/cmd/naabu
+  - github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+  - github.com/projectdiscovery/tlsx/cmd/tlsx
+  - github.com/projectdiscovery/interactsh/cmd/interactsh-client
+  - github.com/projectdiscovery/mapcidr/cmd/mapcidr
+  - github.com/hakluke/hakrawler
+  - github.com/ferreiraklet/Jeeves
+  - github.com/hahwul/jwt-hack
+  - github.com/antonmedv/fx
+  - github.com/homeport/dyff/cmd/dyff
+  - github.com/jpillora/chisel
+  - github.com/ropnop/kerbrute
+  - github.com/ndelphit/apkurlgrep
+  - github.com/ropnop/go-windapsearch/cmd/windapsearch
+  # - github.com/projectdiscovery/cloudlist/cmd/cloudlist
+
+#  install_nvm
+nvm_version: "0.39.3"
+nvm_dir: "/home/{{ ansible_user }}/.nvm"
+
+# install_pipx
+pip_packages:
+  - cowsay
+  - pipenv
+  - pwncat-cs
+  - pwncat
+  - search-that-hash
+  - name-that-hash
+  - crackmapexec
+  - ldapdomaindump
+  - impacket
+  - bloodhound
+  - httpx
+  - html2text
+  - httpie
+  - awscli
+  - mycli
+  - shodan
+  - stegoveritas
+  - updog
+  - usbrip
+  - droopescan
+  - git-dumper
+  - git-vuln-finder
+  - pywhat
+  - dunk
+  - arjun
+  - pylnk3
+  - peepdf
+  - flask-unsign
+  - threader3000
+  - asciinema
+  - black
+  - chardet
+  - shell-functools
+  - s3recon
+  - s3scanner
+  - pacu
+  - prowler
+  - scoutsuite
+  - cloudsplaining
+  - principalmapper
+  - wesng
+  - pre-commit
+
+# setup_bloodhound
+bloodhound_version: "4.2.0"
+arch: "linux-arm64"

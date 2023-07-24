@@ -1,0 +1,10 @@
+---
+- name: Configure Kali
+  hosts: all
+  gather_facts: true
+  roles:
+    - first_run
+    - dotfiles
+    - install_tools
+    - customizations
+    - notes

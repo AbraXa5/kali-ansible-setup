@@ -1,0 +1,26 @@
+---
+- name: Clone fzf repository
+  ansible.builtin.git:
+    repo: https://github.com/junegunn/fzf.git
+    dest: "{{ ansible_facts['user_dir'] }}/.fzf"
+    depth: 1
+
+- name: Install fzf w/o any shell modifications
+  ansible.builtin.shell:
+    cmd: "{{ ansible_facts['user_dir'] }}/.fzf/install --no-update-rc --no-bash --no-zsh"
+  # noqa: command-instead-of-shell
+  # noqa: no-changed-when
+
+- name: Install packages with apt
+  ansible.builtin.apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ apt_packages }}"
+  when: ansible_facts['ansible_os_family'] == 'Debian'
+
+- name: Install packages with pacman
+  community.general.pacman:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ pacman_packages }}"
+  when: ansible_facts['ansible_os_family'] == 'Arch'

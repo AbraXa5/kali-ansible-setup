@@ -1,0 +1,31 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"A File Icon",
+		"ayu",
+		"BracketHighlighter",
+		"EditorConfig",
+		"Git",
+		"GitGutter",
+		"Jedi - Python autocompletion",
+		"MarkdownEditing",
+		"MarkdownLivePreview",
+		"Material Theme",
+		"Package Control",
+		"PackageSync",
+		"Pretty YAML",
+		"Python 3",
+		"python-black",
+		"SideBarEnhancements",
+		"SublimeLinter",
+		"SublimeLinter-annotations",
+		"SublimeLinter-eslint",
+		"SublimeLinter-shellcheck",
+		"SublimeLinter-tslint",
+		"Theme - Spacegray",
+	],
+}

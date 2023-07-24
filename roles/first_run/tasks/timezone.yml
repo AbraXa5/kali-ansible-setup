@@ -1,0 +1,11 @@
+# roles/first_run/tasks/timezone.yml
+---
+- name: Check the current timezone
+  ansible.builtin.command: timedatectl show --property=Timezone --value
+  register: current_timezone
+  changed_when: false
+
+- name: Set timezone to ""{{ timezone }}""
+  community.general.timezone:
+    name: "{{ timezone }}"
+  when: current_timezone.stdout != "Asia/Calcutta"

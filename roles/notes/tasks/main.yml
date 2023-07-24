@@ -1,0 +1,6 @@
+# roles/notes/tasks/main.yml
+---
+- name: Clone Private Repos
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.import_tasks: clone_private_repos.yml

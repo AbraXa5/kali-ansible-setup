@@ -1,0 +1,26 @@
+# roles/first_run/tasks/main.yml
+---
+- name: Pre tasks before apt operations
+  become: true
+  ansible.builtin.import_tasks: pre_tasks.yml
+
+- name: Change user shell to ZSH
+  become: true
+  ansible.builtin.import_tasks: change_shell.yml
+
+- name: Set timezone
+  become: true
+  ansible.builtin.import_tasks: timezone.yml
+
+- name: Regenerate SSH Keys
+  become: true
+  ansible.builtin.import_tasks: regenerate_ssh_keys.yml
+  when: regen_ssh_keys
+
+- name: Update, and Upgrade
+  become: true
+  ansible.builtin.import_tasks: upgrade.yml
+
+- name: Maintenance
+  become: true
+  ansible.builtin.import_tasks: maintain.yml

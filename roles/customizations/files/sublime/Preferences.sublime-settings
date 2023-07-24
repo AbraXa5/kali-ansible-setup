@@ -1,0 +1,77 @@
+{
+	"font_size": 10,
+
+	"tab_size": 4,
+    "translate_tabs_to_spaces": true,
+    "trim_trailing_white_space_on_save": true,
+    "ensure_newline_at_eof_on_save": true,
+
+    "auto_complete": true,
+    "detect_indentation": true,
+    "draw_indent_guides": true,
+
+	"spell_check": false,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"show_full_path": true,
+    "find_selected_text": true,
+
+    "remember_open_files": true,
+    "save_on_focus_lost": true,
+
+	"ignored_packages":
+	[
+		"Vintage",
+	],
+
+	// Theme Settings
+	"theme": "Material-Theme-Palenight.sublime-theme",
+	/*"material_theme_tabs_autowidth": true,*/
+	/*"material_theme_tabs_autowidth": true,*/
+	/*"material_theme_accent_acid-lime": true,*/
+	/*"material_theme_accent_blue": true,*/
+	/*"material_theme_accent_bright-teal": true,*/
+	/*"material_theme_accent_bright-teal": true,*/
+	/*"material_theme_accent_yellow": true,*/
+	/*"material_theme_accent_indigo": true,*/
+	/*"material_theme_accent_graphite": true,*/
+	/*"material_theme_accent_graphite": true,*/
+	/*"material_theme_accent_orange": true,*/
+	/*"material_theme_accent_indigo": true,*/
+	"material_theme_accent_yellow": true,
+	/*"material_theme_accent_tomato": true,*/
+	/*"material_theme_accent_sky": true,*/
+	/*"material_theme_accent_scrollbars": true,*/
+	/*"material_theme_accent_scrollbars": true,*/
+	"material_theme_accent_titlebar": true,
+	/*"material_theme_panel_separator": true,*/
+	/*"material_theme_small_statusbar": true,*/
+	"material_theme_small_statusbar": true,
+	/*"material_theme_titlebar": true,*/
+	"material_theme_compact_panel": true,
+
+
+    // Exclude distracting files and folders from the Sidebar
+    "file_exclude_patterns":
+    [
+        ".DS_Store",
+        "*.pid",
+        "*.pyc"
+	],
+    "folder_exclude_patterns":
+    [
+        ".git",
+        "__pycache__",
+        "env",
+        "env3"
+	],
+	/*"material_theme_arrow_folders": true,*/
+	/*"material_theme_arrow_folders": true,*/
+	/*"material_theme_arrow_folders": true,*/
+	/*"material_theme_accent_acid-lime": true,*/
+	/*"material_theme_accent_scrollbars": true,*/
+	"material_theme_bright_scrollbars": true,
+	/*"material_theme_contrast_mode": true,*/
+	"material_theme_contrast_mode": true,
+	"material_theme_small_tab": true,
+}

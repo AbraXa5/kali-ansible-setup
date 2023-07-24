@@ -1,0 +1,43 @@
+---
+# vars file for dotfiles
+dotfiles_repo: "https://github.com/AbraXa5/dotfiles.git"
+dotfiles_dest: "{{ ansible_facts['user_dir'] }}/.dotfiles.git"
+dotfiles_version: main
+
+# packages for dotfiles
+apt_packages:
+  - bat
+  - exa
+  - silversearcher-ag
+  - xclip
+  - nnn
+  - peco
+  - jq
+  - python3
+  - python3-pip
+  - python3-venv
+  - unzip
+  - nmap
+  - remmina
+  - fortune-mod
+  - toilet
+  - cowsay
+  - golang-go
+pacman_packages:
+  - bat
+  - exa
+  - the_silver_searcher
+  - xclip
+  - nnn
+  - peco
+  - jq
+  - python3
+  - python3-pip
+  - python3-venv
+  - unzip
+  - nmap
+  - remmina
+  - fortune-mod
+  - toilet
+  - cowsay
+  - go
