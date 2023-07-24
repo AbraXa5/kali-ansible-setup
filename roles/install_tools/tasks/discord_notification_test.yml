@@ -2,8 +2,8 @@
 ---
 - name: Send discord notification
   community.general.discord:
-    webhook_id: "1132408363796398204"
-    webhook_token: "raE9XnDXqiKqTW_K-kNR7yFK3bsVrLYjtmi4W5tuvXHRF0OY_tVvxZzWji6Lr6gLJPT5"
+    webhook_id: "{{ webhook_id }}"
+    webhook_token: "{{ webhook_token }}"
     content: "The playbook failed on {{ ansible_hostname }}, task: Test"
     avatar_url: "https://docs.ansible.com/ansible/latest/_static/images/logo_invert.png"
     username: Ansible
