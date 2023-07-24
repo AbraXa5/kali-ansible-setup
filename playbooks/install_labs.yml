@@ -1,0 +1,46 @@
+- name: Install Labs for testing
+  tags: install_labs
+  hosts: all
+  become: true
+  become_user: "{{ ansible_user }}"
+  tasks:
+    - name: Docker lab images
+      community.docker.docker_image:
+        name: "{{ item }}"
+        source: pull
+      loop:
+        - tleemcjr/metasploitable2
+        - acgpiano/sqli-labs
+        - eystsen/vulnerablewordpress
+
+    - name: Clone github repositories
+      ansible.builtin.git:
+        repo: "{{ item }}"
+        dest: "/home/{{ ansible_user }}/Tools/{{ item.split('/')[-1].replace('.git', '') }}"
+        update: true
+        depth: 1
+        single_branch: true
+        accept_newhostkey: true
+      loop:
+        - https://github.com/RhinoSecurityLabs/cloudgoat.git
+        - https://github.com/BishopFox/iam-vulnerable.git
+        - https://github.com/ine-labs/AWSGoat.git
+        - https://github.com/digininja/nosqlilab.git
+        - https://github.com/digininja/vuLnDAP.git
+        - https://github.com/Audi-1/sqli-labs.git
+        - https://github.com/spring2go/oauth2lab.git
+        - https://github.com/digininja/svg_xss.git
+        - https://github.com/digininja/sockettome.git
+        - https://github.com/digininja/leakyrepo.git
+        - https://github.com/digininja/authlab.git
+        - https://github.com/yogisec/VulnerableSAMLApp.git
+        - https://github.com/s4n7h0/xvwa.git
+        - https://github.com/rtfpessoa/yavdb.git
+        - https://gitlab.com/r00k/clicker-service.git
+        - https://github.com/aj00200/xssed.git
+        - https://github.com/incredibleindishell/SSRF_Vulnerable_Lab.git
+        - https://github.com/incredibleindishell/CORS-vulnerable-Lab.git
+        - https://github.com/incredibleindishell/CORS_vulnerable_Lab-Without_Database.git
+        - https://github.com/jbarone/xxelab.git
+        - https://github.com/anil-yelken/Vulnerable-Flask-App.git
+    # noqa: latest

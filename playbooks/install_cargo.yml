@@ -1,0 +1,25 @@
+- name: Install Rust
+  tags: install_rust
+  hosts: all
+  become: true
+  become_user: "{{ ansible_user }}"
+  vars:
+    cargo_dir: "/home/{{ ansible_user }}/.cargo"
+
+  tasks:
+    - name: Check if cargo directory exists
+      ansible.builtin.stat:
+        path: "{{ cargo_dir }}"
+      register: cargo_dir_stat
+
+    - name: Download rust install script
+      ansible.builtin.get_url:
+        url: "https://sh.rustup.rs"
+        dest: "/tmp/rust_install.sh"
+        mode: "0755"
+      when: not cargo_dir_stat.stat.exists
+
+    - name: Run rust install script
+      ansible.builtin.command: "/tmp/rust_install.sh --no-modify-path --profile default -y"
+      args:
+        creates: "{{ cargo_dir }}"

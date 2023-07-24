@@ -1,0 +1,49 @@
+---
+- name: Apt operations
+  ansible.builtin.include_tasks: pre_tasks.yml
+
+- name: Regenerate SSH Keys
+  ansible.builtin.include_tasks: regenerate_ssh_keys.yml
+
+- name: Install Fonts
+  ansible.builtin.include_tasks: install_fonts.yml
+
+- name: Install Tools
+  ansible.builtin.include_tasks: install_tools_apt.yml
+
+- name: Github
+  ansible.builtin.include_tasks: github_clone.yml
+
+- name: Install editors
+  ansible.builtin.include_tasks: "install_{{ item }}.yml"
+  loop:
+    - sublime
+    - code
+
+- name: Install package managers
+  ansible.builtin.include_tasks: "install_{{ item }}.yml"
+  loop:
+    - pipx
+    - nvm
+    - golang
+    # - nim
+    - cargo
+    - fzf
+
+- name: Install docker
+  ansible.builtin.include_tasks: install_docker.yml
+
+- name: Download binaries
+  ansible.builtin.include_tasks: download_tools_binaries.yml
+
+- name: Fix evil winrm
+  ansible.builtin.include_tasks: fix_evil-winrm.yml
+
+- name: Setup
+  ansible.builtin.include_tasks: "setup_{{ item }}.yml"
+  loop:
+    - bloodhound
+    - wordlists
+
+- name: Configure XFCE
+  ansible.builtin.include_tasks: xfce4_config.yml

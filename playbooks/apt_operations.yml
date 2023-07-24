@@ -1,0 +1,24 @@
+---
+- name: Update and Full Upgrade
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Update and upgrade
+      tags:
+        - update
+        - upgrade
+      become: true
+      ansible.builtin.apt:
+        upgrade: full
+        update_cache: true
+    - name: Remove useless packages from cache
+      ansible.builtin.apt:
+        autoclean: true
+    - name: Remove package dependencies that are no longer required
+      ansible.builtin.apt:
+        autoremove: true
+
+    - name: Update local Database
+      ansible.builtin.command: updatedb
+      changed_when: false

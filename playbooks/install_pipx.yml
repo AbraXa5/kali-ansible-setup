@@ -1,0 +1,70 @@
+- name: Install pipx and tools
+  tags: pipx_install
+  hosts: all
+  become: true
+  tasks:
+    - name: Install pipx
+      tags: pipx
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.pip:
+        name: pipx
+        state: present
+
+    - name: Set pipx path
+      tags: pipx
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.command: python3 -m pipx ensurepath
+      args:
+        creates: "/home/{{ ansible_user }}/.local/bin/pipx"
+
+    - name: Install pipx modules
+      tags: pipx
+      become_user: "{{ ansible_user }}"
+      community.general.pipx:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - cowsay
+        - pipenv
+        - pwncat-cs
+        - pwncat
+        - search-that-hash
+        - name-that-hash
+        - crackmapexec
+        - ldapdomaindump
+        - impacket
+        - bloodhound
+        # TODO: Use docker image instead
+        # - ciphey
+        - httpx
+        - html2text
+        - httpie
+        - awscli
+        - mycli
+        - shodan
+        - stegoveritas
+        - updog
+        - usbrip
+        - droopescan
+        - git-dumper
+        - git-vuln-finder
+        - pywhat
+        - dunk
+        - arjun
+        - pylnk3
+        - peepdf
+        - flask-unsign
+        - threader3000
+        - asciinema
+        - black
+        - chardet
+        - shell-functools
+        - s3recon
+        - s3scanner
+        - pacu
+        - prowler
+        - scoutsuite
+        - cloudsplaining
+        - principalmapper
+        - wesng
+        - pre-commit

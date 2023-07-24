@@ -1,0 +1,11 @@
+---
+- name: Import ansible tasks
+  hosts: localhost
+  become: true
+  gather_facts: false
+
+  tasks:
+    - ansible.builtin.import_tasks: debug_vars.yml
+      vars:
+        var1: value1
+        var2: value2

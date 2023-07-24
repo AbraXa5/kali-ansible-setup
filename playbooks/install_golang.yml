@@ -1,0 +1,78 @@
+- name: Install docker
+  tags: golang_install
+  hosts: all
+  become: true
+  tasks:
+    - name: Install go lang
+      become: true
+      ansible.builtin.apt:
+        name: golang
+        state: present
+    - name: Add Golang environment variables to .zshrc
+      tags: add_to_path
+      become: true
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.blockinfile:
+        path: "/home/{{ ansible_user }}/.zshrc"
+        block: |
+          export GOPATH=$HOME/go
+          export PATH=$PATH:$GOPATH/bin
+        backup: true
+
+    - name: Reset connection to load go lang env variables
+      ansible.builtin.meta: reset_connection
+
+    - name: Source .zshrc
+      tags: debug
+      become: true
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.shell: source .zshrc && echo $GOPATH
+      args:
+        executable: /bin/zsh
+      register: source_result
+      changed_when: false
+
+    - name: Debug .zshrc source with GOPATH
+      tags: debug
+      ansible.builtin.debug:
+        var: source_result.stdout
+
+    - name: Install packages using go install
+      tags: install_tools
+      vars:
+        go_path: "/home/{{ ansible_user }}/go"
+      environment:
+        GOPATH: "{{ go_path }}"
+      become: true
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.command: "go install {{ item }}@latest"
+      args:
+        creates: "{{ go_path }}/bin/{{ item | basename }}"
+
+      loop:
+        - github.com/tomnomnom/gron
+        - github.com/tomnomnom/httprobe
+        - github.com/tomnomnom/assetfinder
+        - github.com/tomnomnom/meg
+        - github.com/tomnomnom/unfurl
+        - github.com/tomnomnom/waybackurls
+        - github.com/tomnomnom/gf
+        - github.com/tomnomnom/anew
+        - github.com/projectdiscovery/subfinder/v2/cmd/subfinder
+        - github.com/projectdiscovery/httpx/cmd/httpx
+        # - github.com/projectdiscovery/simplehttpserver/cmd/simplehttpserver
+        - github.com/projectdiscovery/naabu/v2/cmd/naabu
+        - github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+        - github.com/projectdiscovery/tlsx/cmd/tlsx
+        - github.com/projectdiscovery/interactsh/cmd/interactsh-client
+        - github.com/projectdiscovery/mapcidr/cmd/mapcidr
+        - github.com/hakluke/hakrawler
+        - github.com/ferreiraklet/Jeeves
+        - github.com/hahwul/jwt-hack
+        - github.com/antonmedv/fx
+        - github.com/homeport/dyff/cmd/dyff
+        - github.com/jpillora/chisel
+        - github.com/ropnop/kerbrute
+        - github.com/ndelphit/apkurlgrep
+        - github.com/ropnop/go-windapsearch/cmd/windapsearch
+        # - github.com/projectdiscovery/cloudlist/cmd/cloudlist

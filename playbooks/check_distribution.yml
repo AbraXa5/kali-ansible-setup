@@ -1,0 +1,19 @@
+---
+- name: Check distribution
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Check distribution and set fact
+      ansible.builtin.set_fact:
+        is_kali: true
+      when: ansible_distribution == 'Kali' and ansible_distribution_release is defined
+
+    - name: Check OS family
+      ansible.builtin.set_fact:
+        is_debian: true
+      when: ansible_os_family == 'Debian' and ansible_distribution_release is defined
+
+    - name: Check OS family
+      ansible.builtin.set_fact:
+        is_arch: true
+      when: ansible_os_family == 'Arch' and ansible_distribution_release is defined

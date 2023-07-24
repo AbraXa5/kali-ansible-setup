@@ -1,0 +1,67 @@
+- name: Install docker
+  tags: install_docker
+  hosts: all
+  become: true
+
+  vars:
+    pull_docker_images: false
+
+  tasks:
+    - name: Install docker
+      ansible.builtin.apt:
+        name:
+          - docker.io
+          - docker-compose
+          - docker-clean
+        state: present
+
+    - name: Add user to docker group
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        append: true
+        groups:
+          - docker
+
+    - name: Enable and start docker
+      become: true
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Verify Installation
+      become: true
+      ansible.builtin.command:
+        cmd: docker --version
+      register: docker_installed
+      changed_when: false
+      failed_when: docker_installed.rc != 0
+
+    # https://www.jeffgeerling.com/blog/2021/allowing-ansible-playbooks-work-new-user-groups-on-first-runc
+    - name: Reset connection so docker group is picked up
+      ansible.builtin.meta: reset_connection
+
+    - name: Verify User can execute docker w/o sudo perms
+      become_user: "{{ ansible_user }}"
+      tags: debug
+      ansible.builtin.command:
+        cmd: docker --version
+      register: docker_nosudo
+      changed_when: false
+      failed_when: docker_nosudo.rc != 0
+
+    # Won't pull images by default, need to change when
+    - name: Pull Docker image
+      # ansible.builtin.docker_image:
+      become_user: "{{ ansible_user }}"
+      community.docker.docker_image:
+        name: "{{ item }}"
+        source: pull
+      loop:
+        - metasploitframework/metasploit-framework
+        - rflathers/impacket
+        - rflathers/nginxserve
+        - tleemcjr/metasploitable2
+        - acgpiano/sqli-labs
+        - eystsen/vulnerablewordpress
+      when: pull_docker_images

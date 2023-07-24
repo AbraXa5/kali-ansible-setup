@@ -1,0 +1,41 @@
+- name: Install nvm
+  tags: install_nvm
+  hosts: all
+  become: true
+  vars:
+    nvm_version: "0.39.3"
+    nvm_dir: "/home/{{ ansible_user }}/.nvm"
+  environment:
+    NVM_DIR: "{{ nvm_dir }}"
+  tasks:
+    - name: Check if nvm directory exists
+      ansible.builtin.stat:
+        path: "{{ nvm_dir }}"
+      register: nvm_dir_stat
+
+    - name: Download nvm install script
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.get_url:
+        url: "https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh"
+        dest: "/tmp/nvm_install.sh"
+        mode: "0755"
+      when: not nvm_dir_stat.stat.exists
+
+    - name: Install nvm
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.command: "/tmp/nvm_install.sh"
+      args:
+        creates: "{{ nvm_dir }}/nvm.sh"
+      when: not nvm_dir_stat.stat.exists
+
+    - name: Add NVM environment variables to .zshrc
+      tags: add_to_path
+      become: true
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.blockinfile:
+        path: "/home/{{ ansible_user }}/.zshrc"
+        block: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+          [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+        backup: true

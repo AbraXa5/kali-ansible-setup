@@ -1,0 +1,60 @@
+---
+- name: Configure XFCE4
+  tags:
+    - xfce4
+  hosts: all
+  become: true
+  become_user: "{{ ansible_user }}"
+  vars:
+    local_dir: "files/xfce4"
+    xfce_config_dir: "/home/{{ ansible_user }}/.config/xfce4"
+    display: ":0.0"
+
+  tasks:
+    - name: Copy XFCE4 config files
+      ansible.builtin.copy:
+        remote_src: false
+        src: "{{ local_dir }}/xfce-perchannel-xml/{{ item }}"
+        dest: "{{ xfce_config_dir }}/xfconf/xfce-perchannel-xml/"
+        mode: "0644"
+        # checksum: true
+      loop:
+        # Change wallpaper
+        - xfce4-desktop.xml
+        # Panel config
+        - xfce4-panel.xml
+        # Disable power management
+        - xfce4-power-manager.xml
+        # Disable lockscreen
+        - xfce4-session.xml
+        # Appearence settings
+        - xsettings.xml
+    - name: Copy Panel files
+      # become: true
+      ansible.builtin.copy:
+        remote_src: false
+        src: "{{ local_dir }}/panel/"
+        dest: "{{ xfce_config_dir }}/panel/"
+        directory_mode: "0700"
+        mode: "0644"
+        # force: true
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Reload XFCE desktop
+      environment:
+        DISPLAY: "{{ display }}"
+      # https://wiki.xfce.org/howto/customize-menu#forcing_changes
+      ansible.builtin.shell: xfdesktop --reload
+      args:
+        executable: /bin/zsh
+      changed_when: false
+      register: reload_xfce
+
+    - name: Reboot to apply changes
+      tags: reboot
+      become: true
+      # Interactive login required
+      become_user: "root"
+      ansible.builtin.reboot:
+        reboot_timeout: 300

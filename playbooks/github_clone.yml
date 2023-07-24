@@ -1,0 +1,85 @@
+---
+- name: Clone git repositories
+  tags:
+    - github_repos
+    - install_tools
+  hosts: all
+  become: true
+  tasks:
+    - name: Clone repos to Tools w/o history
+      become: true
+      become_user: "{{ ansible_user }}"
+      ansible.builtin.git:
+        repo: "{{ item }}"
+        dest: "/home/{{ ansible_user }}/Tools/{{ item.split('/')[-1].replace('.git', '') }}"
+        update: true
+        depth: 1
+        single_branch: true
+        accept_newhostkey: true
+      loop:
+        - https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git
+        - https://github.com/diego-treitos/linux-smart-enumeration.git
+        - https://github.com/mzet-/linux-exploit-suggester.git
+        - https://github.com/rebootuser/LinEnum.git
+        - https://github.com/CiscoCXSecurity/enum4linux.git
+        - https://github.com/cddmp/enum4linux-ng.git
+        - https://github.com/bitsadmin/wesng.git
+        - https://github.com/jaeles-project/gospider.git
+        - https://github.com/BlackArch/wordlistctl.git
+        - https://github.com/ticarpi/jwt_tool.git
+        - https://github.com/Srinivas11789/PcapXray.git
+        - https://github.com/mzfr/liffy.git
+        - https://github.com/D35m0nd142/LFISuite.git
+        - https://github.com/jcesarstef/dotdotslash.git
+        - https://github.com/codingo/NoSQLMap.git
+        - https://github.com/codingo/Interlace.git
+        - https://github.com/wagoodman/dive.git
+        - https://github.com/stealthcopter/deepce.git
+        - https://github.com/s0md3v/Photon.git
+        - https://github.com/s0md3v/Decodify.git
+        - https://github.com/s0md3v/XSStrike.git
+        - https://github.com/jpillora/chisel.git
+        - https://github.com/evilpacket/DVCS-Pillage.git
+        - https://github.com/techgaun/github-dorks.git
+        - https://github.com/internetwache/GitTools.git
+        - https://github.com/UnkL4b/GitMiner.git
+        - https://github.com/GONZOsint/gitrecon.git
+        - https://github.com/HightechSec/git-scanner.git
+        - https://github.com/sharsil/mailcat.git
+        - https://github.com/Dionach/CMSmap.git
+        - https://github.com/ajinabraham/CMSScan.git
+        - https://github.com/Tuhinshubhra/CMSeeK.git
+        - https://github.com/commixproject/commix.git
+        - https://github.com/Mebus/cupp.git
+        - https://github.com/immunIT/drupwn.git
+        - https://github.com/SECFORCE/SNMP-Brute.git
+        - https://github.com/antonioCoco/ConPtyShell.git
+        - https://github.com/flozz/p0wny-shell.git
+        - https://github.com/antonioCoco/RunasCs.git
+        - https://github.com/mrts/burp-suite-http-proxy-history-converter.git
+        - https://github.com/SecureAuthCorp/impacket.git
+        - https://github.com/The-Viper-One/ActiveDirectoryAttackTool.git
+        - https://github.com/adrecon/ADRecon.git
+        - https://github.com/WithSecureLabs/chainsaw.git
+        - https://github.com/breenmachine/RottenPotatoNG.git
+        # TODO: Add juciy potato and juicypotatoNG
+        - https://github.com/synacktiv/php_filter_chain_generator.git
+        - https://github.com/christophetd/cloudflair.git
+        - https://github.com/swisskyrepo/SSRFmap.git
+        - https://github.com/carlospolop/fuzzhttpbypass.git
+        - https://github.com/tarunkant/Gopherus.git
+        - https://github.com/incredibleindishell/SSRF_Vulnerable_Lab.git
+        - https://github.com/epinna/tplmap.git
+        # - https://github.com/nccgroup/ScoutSuite.git
+        # - https://github.com/RhinoSecurityLabs/cloudgoat.git
+        # - https://github.com/joshlarsen/aws-recon.git
+        # - https://github.com/duo-labs/cloudmapper.git
+        # - https://github.com/nccgroup/aws-inventory.git
+        - https://github.com/carlospolop/PurplePanda.git
+        # - https://github.com/1N3/IntruderPayloads.git
+        # - https://github.com/joaomatosf/jexboss.git
+        # - https://github.com/frohoff/ysoserial
+        # - https://github.com/pwntester/ysoserial.net
+        # - https://github.com/EnableSecurity/wafw00f.git
+        - https://github.com/samratashok/nishang.git
+    # noqa: latest

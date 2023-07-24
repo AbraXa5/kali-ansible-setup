@@ -1,0 +1,24 @@
+---
+- name: Change user shell to ZSH
+  tags: shell
+  hosts: all
+  become: true
+  tasks:
+    - name: Install zsh
+      become: true
+      ansible.builtin.apt:
+        name:
+          - zsh
+        state: latest
+    # noqa: package-latest
+
+    - name: "Change shell to zsh for {{ ansible_user }}"
+      tags:
+        - shell
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        # TODO: Check absolute path for ZSH
+        shell: /bin/zsh
+
+    - name: Reset connection
+      ansible.builtin.meta: reset_connection

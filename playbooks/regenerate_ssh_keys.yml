@@ -1,0 +1,60 @@
+---
+- name: Regenerate SSH Host Keys
+  tags: ssh_regen
+  hosts: all
+  become: true
+  vars:
+    default_keys_dir: "/etc/ssh/default_kali_keys/"
+    src_dir: "/etc/ssh"
+    pattern: "ssh_host_*"
+  tasks:
+    - name: Create Default Kali Keys Directory
+      ansible.builtin.file:
+        path: "{{ default_keys_dir }}"
+        state: directory
+        mode: "0644"
+        owner: root
+        group: root
+      register: create_default_keys_dir
+
+    - name: Find files SSH keys using pattern matching
+      ansible.builtin.find:
+        paths: "{{ src_dir }}"
+        patterns: "{{ pattern }}"
+        file_type: file
+        recurse: false
+        use_regex: true
+      register: ssh_keys
+
+    - name: Debug
+      tags: debug
+      ansible.builtin.debug:
+        msg: "{{ item.path }}"
+      loop: "{{ ssh_keys.files }}"
+
+    - name: Copy SSH host keys as backup
+      ansible.builtin.copy:
+        src: "{{ item.path }}"
+        dest: "{{ default_keys_dir }}"
+        mode: "0600"
+        remote_src: true
+      loop: "{{ ssh_keys.files }}"
+      register: ssh_copy_result
+      when: ssh_keys.matched != 0 and create_default_keys_dir.changed
+
+    - name: Remove existing host keys
+      ansible.builtin.file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ ssh_keys.files }}"
+      register: delete_ssh_keys_result
+      when: ssh_copy_result.changed
+      # noqa: no-handler
+
+    - name: Reconfigure OpenSSH
+      become: true
+      ansible.builtin.command: dpkg-reconfigure openssh-server
+      when: delete_ssh_keys_result.changed
+      changed_when: reconfigure_ssh.rc == 0
+      register: reconfigure_ssh
+      # noqa: no-handler

@@ -1,0 +1,35 @@
+---
+- name: Restart playbook
+  tags:
+    - restart
+  hosts: all
+  become: true
+  tasks:
+    - name: Reboot using builtin
+      tags: builtin
+      # Interactive login required
+      become_user: "root"
+      ansible.builtin.reboot:
+        reboot_timeout: 300
+
+    - name: Restart server
+      ansible.builtin.shell: /sbin/reboot
+      async: 1
+      poll: 0
+      changed_when: false
+    # noqa: command-instead-of-shell
+
+    # https://github.com/ansible/ansible/issues/16139
+    - name: Set current host
+      ansible.builtin.set_fact:
+        current_host: "{{ ansible_host }}"
+
+    - name: Wait for server to come back
+      become: false
+      delegate_to: localhost
+      ansible.builtin.wait_for:
+        host: "{{ current_host }}"
+        delay: 20
+        port: 22
+        state: started
+        connect_timeout: 200

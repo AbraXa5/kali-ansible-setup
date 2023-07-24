@@ -1,0 +1,29 @@
+---
+- name: Install fzf
+  tags: install_fzf
+  hosts: all
+  become: true
+  become_user: "{{ ansible_user }}"
+  vars:
+    fzf_dir: "/home/{{ ansible_user }}/.fzf"
+  # environment:
+  #   NVM_DIR: "{{ nvm_dir }}"
+  tasks:
+    - name: Check if FZF directory exists
+      tags: debug
+      ansible.builtin.stat:
+        path: "{{ fzf_dir }}"
+      register: fzf_dir_stat
+
+    - name: Clone FZF repo
+      ansible.builtin.git:
+        repo: "https://github.com/junegunn/fzf.git"
+        dest: "/home/{{ ansible_user }}/.fzf"
+        update: true
+        depth: 1
+        # noqa: latest
+
+    - name: Run fzf install script w/o updating rc files
+      ansible.builtin.command: "{{ fzf_dir }}/install --key-bindings --completion --no-update-rc"
+      args:
+        creates: ".fzf.zsh"

@@ -1,0 +1,61 @@
+---
+- name: Fix Evil-WinRM path completion
+  hosts: all
+  tags: fix_evil-winrm
+  become: true
+  vars:
+    version: "3.1.2"
+  tasks:
+    - name: Ruby readline check
+      ansible.builtin.stat:
+        path: "/opt/ruby-{{ version }}/ext/readline/readline.so"
+      register: readline_status
+
+    - name: Install libreadline-dev
+      ansible.builtin.apt:
+        name: libreadline-dev
+        state: latest
+      when: not readline_status.stat.exists
+      # noqa: package-latest
+
+    - name: Install rb-readline and ffi gem
+      community.general.gem:
+        name:
+          - rb-readline
+          - ffi
+        state: present
+      when: not readline_status.stat.exists
+
+    - name: Download ruby source code
+      ansible.builtin.get_url:
+        url: "https://ftp.ruby-lang.org/pub/ruby/{{ version.split('.')[0:2] | join('.') }}/ruby-{{ version }}.tar.gz"
+        dest: "/tmp/ruby-{{ version }}.tar.gz"
+        mode: "0755"
+      when: not readline_status.stat.exists
+
+    - name: Extract ruby archive
+      ansible.builtin.unarchive:
+        remote_src: true
+        src: "/tmp/ruby-{{ version }}.tar.gz"
+        dest: "/opt/"
+      when: not readline_status.stat.exists
+
+    - name: Compile Ruby extension
+      ansible.builtin.shell:
+        chdir: "/opt/ruby-{{ version }}/ext/readline"
+        cmd: |
+          ruby ./extconf.rb
+          make
+        creates: "readline.so"
+      when: not readline_status.stat.exists
+      check_mode: false
+
+    - name: Patch existing ruby readline extension
+      ansible.builtin.copy:
+        remote_src: true
+        src: "/opt/ruby-{{ version }}/ext/readline/readline.so"
+        dest: "/usr/lib/x86_64-linux-gnu/ruby/{{ version.split('.')[0:2] | join('.') }}.0/readline.so"
+        force: true
+        backup: true
+        mode: "0644"
+      when: not readline_status.stat.exists
