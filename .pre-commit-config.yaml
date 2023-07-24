@@ -6,13 +6,9 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-merge-conflict
-      - id: check-added-large-files
       - id: mixed-line-ending
         args:
           - --fix=lf
-      - id: pretty-format-json
-        args:
-          - --autofix
       - id: check-yaml
       - id: detect-private-key
 

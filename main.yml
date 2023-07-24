@@ -34,12 +34,3 @@
           ansible.builtin.include_role:
             name: notes
           when: clone_notes
-
-      # rescue:
-      #   - name: Send discord notification
-      #     community.general.discord:
-      #       webhook_id: "{{ webhook_id }}"
-      #       webhook_token: "{{ webhook_token }}"
-      #       content: "Playbook failed on {{ ansible_hostname }} during the task ```json\n{{ ansible_failed_task | to_nice_json }}\n```"
-      #       avatar_url: "https://docs.ansible.com/ansible/latest/_static/images/logo_invert.png"
-      #       username: Ansible
