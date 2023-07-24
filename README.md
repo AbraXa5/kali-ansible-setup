@@ -66,7 +66,7 @@ Host kali.vm
 
 Now ansible knows how to connect to the host via SSH using the identity key
 
-If you don't want to setup authN keys, password based authN can be done by setting these variables and install the sshpass package
+If you don't want to setup authN keys, password based authN can be done by setting these variables and installing the sshpass package
 
 -   ansible_host
 -   ansible_user
@@ -95,13 +95,17 @@ ansible-playbook main.yml --limit=local -K
 
 ### Roles
 
-The playbook has multiple role with multiple tasks
+The playbook has multiple roles with multiple tasks
 
 -   first_run
+  -   Change Kali repo and add https support
 -   dotfiles
+  -   Install my [dotfiles](https://github.com/AbraXa5/dotfiles)
 -   install_tools
 -   customizations
+  -   Customize xfce4 panel, power settings and browser
 -   notes
+  -   Clone my notes from private repos
 
 This playbook setups my VM as per my preferences, and also uses private keys in certain roles (for example, notes), so comment out/ remove the roles you don't want from `main.yml` or `setup_kali.yml`.
 
