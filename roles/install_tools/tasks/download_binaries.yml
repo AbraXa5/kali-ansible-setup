@@ -92,20 +92,27 @@
     - src: "/tmp/aquatone_linux_amd64_{{ aquatone_version }}.zip"
       dest: "{{ tools_dir }}/aquatone"
 
-# unarchive supports .tar.gz but not .gz alone
-#
-- name: Download chisel archives
-  ansible.builtin.get_url:
-    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_linux_amd64.gz"
-    dest: "/tmp/chisel_{{ chisel_version }}_linux_amd64.gz"
-    mode: "0755"
+- name: Check if chisel binary exists
+  ansible.builtin.stat:
+    path: "{{ tools_dir }}/chisel/chisel_{{ chisel_version }}_linux_amd64"
+  register: chisel_binary
 
-- name: Extract chisel archives
-  ansible.builtin.shell:
-    chdir: "{{ tools_dir }}/chisel/"
-    cmd: "gunzip -d --no-name /tmp/chisel_{{ chisel_version }}_linux_amd64.gz"
-    creates: "chisel_{{ chisel_version }}_linux_amd64"
-# noqa: command-instead-of-shell
+# unarchive supports .tar.gz but not .gz alone
+- name: Download binary
+  when: not chisel_binary.stat.exists
+  block:
+    - name: Download chisel archives
+      ansible.builtin.get_url:
+        url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_linux_amd64.gz"
+        dest: "/tmp/chisel_{{ chisel_version }}_linux_amd64.gz"
+        mode: "0755"
+
+    - name: Extract chisel archives
+      ansible.builtin.shell:
+        chdir: "{{ tools_dir }}/chisel/"
+        cmd: "gunzip -d --no-name --stdout /tmp/chisel_{{ chisel_version }}_linux_amd64.gz > chisel_{{ chisel_version }}_linux_amd64"
+        creates: "chisel_{{ chisel_version }}_linux_amd64"
+      # noqa: command-instead-of-shell
 
 - name: Create Burpsuite directory
   ansible.builtin.file:
@@ -113,15 +120,18 @@
     state: directory
     mode: "0755"
 
-- name: Download Burp binaries "{{ jython_version }}"
+- name: Download Burp binaries
   ansible.builtin.get_url:
-    url: "{{ item }}"
-    dest: "{{ tools_dir }}/Burpsuite/{{ item | basename }}"
+    url: "{{ item.url }}"
+    dest: "{{ tools_dir }}/Burpsuite/{{ item.filename }}"
     mode: "0755"
+    force: false
   loop:
-    - "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
-    - "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
-      # java -jar -Xmx2G /home/kali/Tools/Burpsuite/burpsuite_community_v2023.2.4.jar
+    - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
+      filename: "jython-standalone-{{ jython_version }}.jar"
+    - url: "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
+      filename: "burpsuite_{{ burpsuite_version }}.jar"
+    # java -jar -Xmx2G /home/kali/Tools/Burpsuite/burpsuite_community_v2023.2.4.jar
   # when: not item.stat.exists
 
 - name: Create shell.sh

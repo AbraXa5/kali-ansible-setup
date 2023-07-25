@@ -9,6 +9,11 @@ mimikatz_version: "2.2.0-20220919"
 aquatone_version: "1.7.0"
 jython_version: "2.7.3"
 burpsuite_version: "2023.2.4"
+burp_binaries:
+  - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
+    filename: "jython-standalone-{{ jython_version }}.jar"
+  - url: "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
+    filename: "burpsuite_{{ burpsuite_version }}.jar"
 
 # fix_evil-winrm
 ruby_version: "3.1.2"
