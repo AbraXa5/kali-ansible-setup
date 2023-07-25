@@ -2,13 +2,13 @@
 # vars file for install_tools
 # download_binaries
 tools_dir: "/home/{{ ansible_user }}/Tools"
-peas_version: "20230319"
+peas_version: "20230724-3e05f4c7"
 chisel_version: "1.8.1"
 pspy_version: "1.2.1"
 mimikatz_version: "2.2.0-20220919"
 aquatone_version: "1.7.0"
 jython_version: "2.7.3"
-burpsuite_version: "2023.2.4"
+burpsuite_version: "2023.6.2"
 burp_binaries:
   - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
     filename: "jython-standalone-{{ jython_version }}.jar"
@@ -145,5 +145,5 @@ pip_packages:
   - pre-commit
 
 # setup_bloodhound
-bloodhound_version: "4.2.0"
+bloodhound_version: "4.3.1"
 bloodhound_arch: "linux-x64"
