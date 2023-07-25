@@ -6,6 +6,7 @@
   register: fzf_dir_stat
 
 - name: Clone FZF repo
+  become_user: "{{ ansible_user }}"
   ansible.builtin.git:
     repo: "https://github.com/junegunn/fzf.git"
     dest: "{{ fzf_dir }}"
