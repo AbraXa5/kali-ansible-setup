@@ -12,6 +12,13 @@
   ansible.builtin.import_tasks: install_sublime.yml
   when: install_sublime
 
+- name: Install fonts and regenerate font cache
+  tags: fonts
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.import_tasks: install_fonts.yml
+  when: xfce4_customizations
+
 - name: Customize XFCE4
   tags: xfce4
   become: true

@@ -1,0 +1,70 @@
+---
+- name: Create font directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+  loop:
+    - "{{ font_temp_dir }}"
+    - "{{ font_install_dir }}"
+
+- name: Download fonts
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ font_temp_dir }}/{{ item.dest }}"
+    mode: "0644"
+  loop:
+    - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+      dest: MesloLGS-NF-Regular.ttf
+    - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+      dest: MesloLGS-NF-Bold.ttf
+    - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+      dest: MesloLGS-NF-Italic.ttf
+    - url: https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+      dest: MesloLGS-NF-Bold-Italic.ttf
+
+- name: Copy fonts to installation directory
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ font_temp_dir }}/{{ item }}"
+    dest: "{{ font_install_dir }}/{{ item }}"
+    mode: "0644"
+  loop:
+    - "MesloLGS-NF-Regular.ttf"
+    - "MesloLGS-NF-Bold.ttf"
+    - "MesloLGS-NF-Italic.ttf"
+    - "MesloLGS-NF-Bold-Italic.ttf"
+  register: font_copy
+
+- name: Install fontconfig package
+  become: true
+  become_user: root
+  ansible.builtin.apt:
+    name: fontconfig
+    state: present
+  when: "'fc-cache' not in ansible_system_capabilities"
+
+- name: Regenerate font cache
+  ansible.builtin.command: fc-cache -f -v
+  register: font_cache
+  changed_when: font_copy.changed
+
+- name: Verify fonts are installed
+  tags: debug
+  ansible.builtin.shell: fc-list | grep -i "MesloLGS-NF"
+  # TODO: Use pipefail with ansible
+  # ansible.builtin.shell: |
+  #     # set -o pipefail
+  #     fc-list | grep -i "MesloLGS-NF"
+  register: font_verify
+  changed_when: false
+  failed_when: false
+# noqa: risky-shell-pipe
+
+- name: Print status message
+  tags: debug
+  ansible.builtin.debug:
+    msg: "Fonts installed successfully"
+  when: font_verify.stdout is defined and font_verify.stdout != "" and not font_verify.failed

@@ -12,3 +12,7 @@ sublime_config_dir: "/home/{{ ansible_user }}/.config/sublime-text/Packages/User
 # xfce4_config
 xfce_config_dir: "/home/{{ ansible_user }}/.config/xfce4"
 display: ":0.0"
+
+# install_fonts
+font_temp_dir: "/tmp/fonts"
+font_install_dir: "/home/{{ ansible_user }}/.local/share/fonts"
