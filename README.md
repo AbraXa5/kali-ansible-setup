@@ -1,5 +1,7 @@
 # Ansible Kali Setup
 
+[![asciicast](https://asciinema.org/a/598965.svg)](https://asciinema.org/a/598965?data-speed="3")
+
 ## Getting Started
 
 Ansible is required on the controller host to run the playbook
