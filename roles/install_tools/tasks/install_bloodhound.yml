@@ -35,8 +35,8 @@
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.get_url:
-    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/{{ bloodhound_version }}/BloodHound-{{ arch }}.zip"
-    dest: "/tmp/bloodhound-{{ arch }}.zip"
+    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/{{ bloodhound_version }}/BloodHound-{{ bloodhound_arch }}.zip"
+    dest: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
     mode: "0755"
   when: true
   register: download_archive
@@ -46,8 +46,8 @@
   become_user: "{{ ansible_user }}"
   ansible.builtin.unarchive:
     remote_src: true
-    src: "/tmp/bloodhound-{{ arch }}.zip"
+    src: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
     dest: "/home/{{ ansible_user }}/Tools/"
-    creates: "/home/{{ ansible_user }}/Tools/bloodhound-{{ arch }}"
+    creates: "/home/{{ ansible_user }}/Tools/bloodhound-{{ bloodhound_arch }}"
   when: download_archive.changed
 # noqa: no-handler

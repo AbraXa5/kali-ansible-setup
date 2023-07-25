@@ -146,4 +146,4 @@ pip_packages:
 
 # setup_bloodhound
 bloodhound_version: "4.2.0"
-arch: "linux-amd64"
+bloodhound_arch: "linux-x64"
