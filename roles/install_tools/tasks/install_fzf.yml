@@ -15,6 +15,9 @@
     # noqa: latest
 
 - name: Run fzf install script w/o updating rc files
-  ansible.builtin.command: "{{ fzf_dir }}/install --key-bindings --completion --no-update-rc"
-  args:
-    creates: ".fzf.zsh"
+  become_user: "{{ ansible_user }}"
+  # ansible.builtin.command: "{{ fzf_dir }}/install --key-bindings --completion --no-update-rc --no-bash --no-zsh"
+  ansible.builtin.command: "{{ fzf_dir }}/install --no-update-rc --no-bash --no-zsh"
+  changed_when: false
+  # args:
+  #   creates: ".fzf.zsh"
