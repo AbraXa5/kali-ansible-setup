@@ -19,11 +19,11 @@
     name: "{{ item }}"
     state: present
   loop: "{{ apt_packages }}"
-  when: ansible_facts['ansible_os_family'] == 'Debian'
+  when: ansible_os_family == 'Debian'
 
 - name: Install packages with pacman
   community.general.pacman:
     name: "{{ item }}"
     state: present
   loop: "{{ pacman_packages }}"
-  when: ansible_facts['ansible_os_family'] == 'Arch'
+  when: ansible_os_family == 'Arch'
