@@ -2,6 +2,8 @@
 ---
 - name: Install pipx
   become_user: "{{ ansible_user }}"
+  environment:
+    PIP_REQUIRE_VIRTUALENV: "false"
   ansible.builtin.pip:
     name: pipx
     state: present
