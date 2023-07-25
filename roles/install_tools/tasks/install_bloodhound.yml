@@ -8,7 +8,7 @@
     state: latest
   # noqa: package-latest
 
-- name: Create Colllector Directory
+- name: Create Collector Directory
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.file:
@@ -35,7 +35,7 @@
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.get_url:
-    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/{{ bloodhound_version }}/BloodHound-{{ bloodhound_arch }}.zip"
+    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/v{{ bloodhound_version }}/BloodHound-{{ bloodhound_arch }}.zip"
     dest: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
     mode: "0755"
   when: true
