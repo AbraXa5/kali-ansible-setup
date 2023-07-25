@@ -3,3 +3,5 @@
 private_repos:
   - "git@htb.github.com:AbraXa5/HTB.git"
   - "git@thm.github.com:AbraXa5/THM.git"
+  - "git@ctfs.github.com:AbraXa5/CTFs.git"
+  - "https://github.com/AbraXa5/DigitalGarden"

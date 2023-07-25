@@ -3,3 +3,12 @@
 install_code: false
 install_sublime: true
 xfce4_customizations: true
+
+# install_vscode
+
+# install_sublime
+sublime_config_dir: "/home/{{ ansible_user }}/.config/sublime-text/Packages/User"
+
+# xfce4_config
+xfce_config_dir: "/home/{{ ansible_user }}/.config/xfce4"
+display: ":0.0"
