@@ -2,9 +2,12 @@
 ---
 - name: Check if private keys exists
   ansible.builtin.find:
-    paths: "{{ ansible_facts['user_dir'] }}/.ssh"
+    paths: "/home/{{ ansible_user }}/.ssh"
     patterns:
-      - "[htb|thm|ctf|digitalGarden]_github*"
+      - "thm_github*"
+      - "htb_github*"
+      - "ctfs_github*"
+      - "digitalGarden_github*"
   register: identiy_keys
 
 - name: Clone private repos
