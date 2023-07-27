@@ -51,7 +51,7 @@ kali.vm    ansible_user=kali  ansible_become_password='kali'
 To set up key based authentication
 
 ```bash
-ssh-keygen -o -f ~/.ssh/id_rsa -C "kali@kali.vm"
+ssh-keygen -f ~/.ssh/id_rsa -C "kali@kali.vm"
 ssh-add ~/.ssh/id_rsa
 ssh-copy-id -i ~/.ssh/id_rsa kali@192.168.253.138
 ```
