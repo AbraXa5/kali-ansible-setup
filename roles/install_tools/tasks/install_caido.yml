@@ -1,0 +1,22 @@
+# roles/install_tools/tasks/install_caido.yml
+---
+- name: Create caido directory
+  ansible.builtin.file:
+    path: "{{ tools_dir }}/Caido"
+    state: directory
+    mode: "0755"
+
+- name: Download cargo from releases
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ tools_dir }}/Caido/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://storage.googleapis.com/caido-releases/v{{ caido_version }}/caido-desktop-{{ base_os }}-v{{ caido_version }}-{{ caido_desktop_hash }}.AppImage"
+    - "https://storage.googleapis.com/caido-releases/v{{ caido_version }}/caido-{{ base_os }}-v{{ caido_version }}-{{ caido_cli_hash }}.tar.gz"
+
+- name: Extract cargo CLI
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: "{{ tools_dir }}/Caido/caido-{{ base_os }}-v{{ caido_version }}-{{ caido_cli_hash }}.tar.gz"
+    dest: "{{ tools_dir }}/Caido/"

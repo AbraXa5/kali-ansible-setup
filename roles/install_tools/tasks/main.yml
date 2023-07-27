@@ -68,6 +68,11 @@
   become: true
   ansible.builtin.import_tasks: fix_evil_winrm.yml
 
+- name: Download Cargo
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.import_tasks: install_caido.yml
+
 - name: Update Database
   become: true
   ansible.builtin.import_tasks: update_db.yml
