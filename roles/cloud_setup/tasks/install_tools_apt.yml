@@ -1,0 +1,10 @@
+# roles/install_tools/tasks/install_tools_apt.yml
+---
+- name: Install base packages and dependencies
+  become: true
+  ansible.builtin.apt:
+    name:
+      - "{{ item }}"
+    state: latest
+  loop: "{{ apt_install }}"
+  # noqa: package-latest

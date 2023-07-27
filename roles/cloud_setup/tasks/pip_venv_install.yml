@@ -1,0 +1,13 @@
+---
+- name: Install pip requirements in a venv
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.pip:
+    requirements: "{{ cloud_tools_dir }}/{{ item.name }}/requirements.txt"
+    virtualenv_python: python3
+    virtualenv: "{{ cloud_tools_dir }}/{{ item.name }}/venv"
+  environment:
+    SETUPTOOLS_USE_DISTUTILS: stdlib
+  args:
+    chdir: "{{ cloud_tools_dir }}/{{ item.name }}"
+  loop: "{{ pip_venv_install }}"

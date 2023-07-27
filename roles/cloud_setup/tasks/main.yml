@@ -1,0 +1,42 @@
+# roles/cloud_setup/tasks/main.yml
+---
+# tasks file for cloud_setup
+- name: Install Tools via apt
+  become: true
+  tags: tools
+  ansible.builtin.import_tasks: install_tools_apt.yml
+
+- name: Clone github repos
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: github
+  ansible.builtin.import_tasks: github_clone.yml
+
+- name: Install pipx
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: pipx
+  ansible.builtin.import_tasks: install_pipx.yml
+
+- name: Install python tools uinsg pipx
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: pipx
+  ansible.builtin.import_tasks: pipx_install_tools.yml
+
+- name: Install python tools in a venv
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: pipx
+  ansible.builtin.import_tasks: pip_venv_install.yml
+
+- name: Install Docker
+  become: true
+  tags: docker
+  ansible.builtin.import_tasks: install_docker.yml
+
+- name: Download binaries
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: tools
+  ansible.builtin.import_tasks: download_binaries.yml

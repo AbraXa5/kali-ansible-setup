@@ -1,0 +1,19 @@
+# roles/cloud_setup/tasks/github_clone.yml
+---
+- name: Create Cloud directory
+  ansible.builtin.file:
+    path: "{{ cloud_tools_dir }}"
+    state: directory
+    mode: "0755"
+    recurse: true
+
+- name: Clone repos to Cloud Tools dir w/o history
+  ansible.builtin.git:
+    repo: "{{ item }}"
+    dest: "{{ cloud_tools_dir }}/{{ item.split('/')[-1].replace('.git', '') }}"
+    update: true
+    depth: 1
+    single_branch: true
+    accept_newhostkey: true
+  loop: "{{ cloud_github_repos }}"
+# noqa: latest

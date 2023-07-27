@@ -1,0 +1,37 @@
+# roles/install_tools/tasks/install_docker.yml
+---
+- name: Install docker
+  ansible.builtin.apt:
+    name:
+      - docker.io
+      - docker-compose
+      - docker-clean
+    state: present
+  # noqa: package-latest
+
+- name: Add user to docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    append: true
+    groups:
+      - docker
+
+- name: Enable and start docker
+  become: true
+  ansible.builtin.service:
+    name: docker
+    state: started
+    enabled: true
+
+# https://www.jeffgeerling.com/blog/2021/allowing-ansible-playbooks-work-new-user-groups-on-first-runc
+- name: Reset connection so docker group is picked up
+  ansible.builtin.meta: reset_connection
+
+- name: Verify Installation
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command:
+    cmd: docker --version
+  register: docker_installed
+  changed_when: false
+  failed_when: docker_installed.rc != 0

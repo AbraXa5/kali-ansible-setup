@@ -1,0 +1,63 @@
+---
+# vars file for cloud_setup
+
+tools_dir: "/home/{{ ansible_user }}/Tools"
+cloud_tools_dir: "/home/{{ ansible_user }}/Tools/Cloud"
+
+# github_repos
+cloud_github_repos:
+  - "https://github.com/FSecureLABS/awspx.git"
+  - "https://github.com/RhinoSecurityLabs/Security-Research.git"
+  - "git@github.com:cloudsploit/scans.git"
+  - "https://github.com/rvedotrc/cloudsaw.git"
+  - "https://github.com/prevade/cloudjack.git"
+  - "https://github.com/ovotech/gitoops.git"
+  - "https://github.com/cyberark/SkyArk.git"
+  - "https://github.com/Static-Flow/CloudCopy.git"
+  - "https://github.com/ustayready/CredKing.git"
+  - "https://github.com/ihamburglar/Redboto.git"
+  - "https://github.com/wallarm/gotestwaf.git"
+  - "git@github.com:andresriancho/enumerate-iam.git"
+  - "https://github.com/carnal0wnage/weirdAAL.git"
+  - "https://github.com/duo-labs/cloudmapper.git"
+
+# install pip tools
+pipx_tools:
+  - "scoutsuite"
+  - "prowler"
+  - "cloudsplaining"
+  - "s3scanner"
+  - "endgame"
+  - "pacu"
+
+pipx_git_install_tools:
+  - name: CloudCopy
+    src: "https://github.com/Static-Flow/CloudCopy.git"
+
+# apt install
+apt_install:
+  - autoconf
+  - automake
+  - libtool
+  - python3
+  - python3-tk
+  - jq
+  - awscli
+
+cloud_docker_images:
+  - "wallarm/gotestwaf"
+  - "toniblyx/prowler"
+
+# pip_venv_install
+
+pip_venv_install:
+  - name: weirdAAL
+    src: https://github.com/carnal0wnage/weirdAAL
+  - name: cloudmapper
+    src: https://github.com/duo-labs/cloudmapper
+
+# download_binaries
+base_os: "linux"
+gitoops_version: "0.0.0"
+cloudfox_version: "1.11.3"
+cloudfoc_arch: "amd64"

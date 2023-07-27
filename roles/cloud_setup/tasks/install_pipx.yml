@@ -1,0 +1,15 @@
+# roles/cloud_setup/tasks/install_pipx.yml
+---
+- name: Install pipx
+  become_user: "{{ ansible_user }}"
+  environment:
+    PIP_REQUIRE_VIRTUALENV: "false"
+  ansible.builtin.pip:
+    name: pipx
+    state: present
+
+- name: Set pipx path
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: python3 -m pipx ensurepath
+  args:
+    creates: "/home/{{ ansible_user }}/.local/bin/pipx"

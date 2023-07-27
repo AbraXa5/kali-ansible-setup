@@ -1,0 +1,14 @@
+---
+- name: Install pipx tools
+  become_user: "{{ ansible_user }}"
+  community.general.pipx:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ pipx_tools }}"
+#
+# - name: "Install pipx tools via github"
+#   community.general.pipx:
+#     name: "{{ item.name }}"
+#     source: "{{ item.src }}"
+#     state: latest
+#   loop: "{{ pipx_git_install_tools }}"

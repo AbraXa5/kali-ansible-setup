@@ -1,0 +1,31 @@
+# roles/cloud_setup/tasks/install_golang.yml
+---
+- name: Install go lang
+  become: true
+  ansible.builtin.apt:
+    name: golang
+    state: present
+
+- name: Add Golang environment variables to .zshrc
+  tags: change_path
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ ansible_user }}/.zshrc"
+    block: |
+      export GOPATH=$HOME/go
+      export PATH=$PATH:$GOPATH/bin
+    backup: true
+
+- name: Reset connection to load go lang env variables
+  ansible.builtin.meta: reset_connection
+
+- name: Source .zshrc
+  tags: debug
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.shell: source .zshrc && echo $GOPATH
+  args:
+    executable: /bin/zsh
+  register: source_result
+  changed_when: false

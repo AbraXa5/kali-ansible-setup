@@ -1,0 +1,50 @@
+# roles/cloud_setup/tasks/download_binaries.yml
+---
+- name: Create tools directories
+  ansible.builtin.file:
+    path: "{{ cloud_tools_dir }}/{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "gitoops"
+    - "cloudfox"
+
+- name: Download gitoops binary
+  ansible.builtin.get_url:
+    url: "https://github.com/ovotech/gitoops/releases/download/v{{ gitoops_version }}/gitoops-{{ base_os }}"
+    dest: "{{ cloud_tools_dir }}/gitoops/gitoops-{{ base_os }}"
+    mode: "0755"
+
+- name: Download cloudfox archive
+  ansible.builtin.get_url:
+    url: "https://github.com/BishopFox/cloudfox/releases/download/v{{ cloudfox_version }}/cloudfox-{{ base_os }}-{{ cloudfox_arch }}.zip"
+    dest: "/tmp/{{ item | basename }}"
+    mode: "0755"
+
+- name: Extract cloudfox archives
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - src: "/tmp/cloudfox-{{ base_os }}-{{ cloudfox_arch }}.zip"
+      dest: "{{ cloud_tools_dir }}/cloudfox/"
+
+- name: Create Burpsuite directory
+  ansible.builtin.file:
+    path: "{{ tools_dir }}/Burpsuite"
+    state: directory
+    mode: "0755"
+
+- name: Download Burp binaries
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ tools_dir }}/Burpsuite/{{ item.filename }}"
+    mode: "0755"
+    force: false
+  loop:
+    - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
+      filename: "jython-standalone-{{ jython_version }}.jar"
+    - url: "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
+      filename: "burpsuite_{{ burpsuite_version }}.jar"
+    # java -jar -Xmx2G /home/kali/Tools/Burpsuite/burpsuite_community_v2023.2.4.jar
