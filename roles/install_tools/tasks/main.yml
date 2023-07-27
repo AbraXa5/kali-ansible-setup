@@ -15,13 +15,13 @@
   become: true
   become_user: "{{ ansible_user }}"
   tags: tools
-  ansible.builtin.import_tasks: install_cargo.yml
+  ansible.builtin.import_tasks: download_binaries.yml
 
 - name: Install Cargo
   become: true
   become_user: "{{ ansible_user }}"
   tags: tools
-  ansible.builtin.import_tasks: download_binaries.yml
+  ansible.builtin.import_tasks: install_cargo.yml
 
 - name: Setup Docker
   become: true
