@@ -1,0 +1,42 @@
+{
+	"editor.insertSpaces": false,
+	"files.trimTrailingWhitespace": true,
+	"files.exclude": {
+		".git": true
+	},
+	"files.associations": {
+		"*.env": "env",
+		"*.yml": "ansible"
+	},
+
+	"git.ignoreLimitWarning": true,
+	"git.branchProtection": ["main"],
+	"git.branchProtectionPrompt": "alwaysCommitToNewBranch",
+	"git.branchRandomName.enable": true,
+	"git.pullBeforeCheckout": true,
+	"git.mergeEditor": false,
+	"files.insertFinalNewline": true,
+	"ansible.python.interpreterPath": "/home/abraxas/.local/pipx/venvs/ansible/bin/python",
+	"cSpell.words": [
+		"Abra",
+		"autoclean",
+		"autoremove",
+		"burpsuite",
+		"chdir",
+		"dotfiles",
+		"ensurepath",
+		"jython",
+		"lineinfile",
+		"mimikatz",
+		"noqa",
+		"pacman",
+		"pipx",
+		"pspy",
+		"rockyou",
+		"splitext",
+		"updatedb",
+		"VIRTUALENV",
+		"wordlists",
+		"xfce"
+	]
+}
