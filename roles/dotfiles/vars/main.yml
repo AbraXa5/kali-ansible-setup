@@ -1,6 +1,6 @@
 ---
 # vars file for dotfiles
-dotfiles_repo: "https://github.com/AbraXa5/dotfiles.git"
+dotfiles_repo: "git@dotfiles.github.com:AbraXa5/dotfiles"
 dotfiles_dest: "{{ ansible_facts['user_dir'] }}/.dotfiles.git"
 dotfiles_version: main
 
