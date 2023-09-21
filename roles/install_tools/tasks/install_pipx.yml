@@ -20,3 +20,10 @@
     name: "{{ item }}"
     state: latest
   loop: "{{ pip_packages }}"
+
+- name: "Install pipx tools via github"
+  community.general.pipx:
+    name: "{{ item.name }}"
+    source: "{{ item.src }}"
+    state: latest
+  loop: "{{ pipx_git_install_tools }}"

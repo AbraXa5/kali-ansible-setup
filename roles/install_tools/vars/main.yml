@@ -64,6 +64,7 @@ github_repos:
   - "https://github.com/pwntester/ysoserial.net"
   - "https://github.com/EnableSecurity/wafw00f.git"
   - "https://github.com/samratashok/nishang.git"
+  - "https://github.com/PowerShellMafia/PowerSploit.git"
 
 # install_cargo
 cargo_dir: "/home/{{ ansible_user }}/.cargo"
@@ -112,9 +113,9 @@ nvm_dir: "/home/{{ ansible_user }}/.nvm"
 pip_packages:
   - cowsay
   - pipenv
-  - pwncat-cs
+  # - pwncat-cs
   - search-that-hash
-  - name-that-hash
+  # - name-that-hash
   - crackmapexec
   - ldapdomaindump
   - impacket
@@ -132,17 +133,32 @@ pip_packages:
   - git-vuln-finder
   - pywhat
   - arjun
-  - pylnk3
+  # - pylnk3
   - flask-unsign
   - threader3000
-  - asciinema
+  # - asciinema
   - black
   - chardet
   - shell-functools
   - s3recon
   - s3scanner
-  - prowler
+  # - prowler
   - pre-commit
+  - certipy-ad
+  - certsync
+  # - coercer
+
+pipx_git_install_tools:
+  - name: certi.py
+    src: git+https://github.com/zer1t0/certi.git
+  - name: ldeep
+    src: git+https://github.com/franc-pentest/ldeep
+  - name: pre2k
+    src: git+https://github.com/garrettfoster13/pre2k.git
+  - name: DonPAPI
+    src: git+https://github.com/login-securite/DonPAPI.git
+  - name: pwncat-cs
+    src: git+https://github.com/AbraXa5/pwncat.git
 
 # setup_bloodhound
 bloodhound_version: "4.3.1"
@@ -153,3 +169,8 @@ caido_version: "0.27.1"
 base_os: "linux"
 caido_desktop_hash: "70e08e2f"
 caido_cli_hash: "c5f8b3a9"
+
+# windows_tools
+
+adpeas_version: "main"
+adenum_version: "main"
