@@ -2,5 +2,6 @@ skip_list:
     - latest[git]
     - latest[package]
     - no-handler
+    - var-naming[no-role-prefix]
 
 offline: false

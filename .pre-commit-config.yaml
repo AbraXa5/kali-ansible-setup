@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.4.0
+    rev: v4.5.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -15,6 +15,6 @@ repos:
 
   # Ansible hooks
   - repo: https://github.com/ansible/ansible-lint.git
-    rev: v6.17.2
+    rev: v6.20.3
     hooks:
       - id: ansible-lint
