@@ -11,6 +11,7 @@
   when: not nvm_dir_stat.stat.exists
   block:
     - name: Download nvm install script
+      become: true
       become_user: "{{ ansible_user }}"
       ansible.builtin.get_url:
         url: "https://raw.githubusercontent.com/nvm-sh/nvm/v{{ nvm_version }}/install.sh"
@@ -18,6 +19,7 @@
         mode: "0755"
 
     - name: Install nvm
+      become: true
       become_user: "{{ ansible_user }}"
       ansible.builtin.command: "/tmp/nvm_install.sh"
       args:

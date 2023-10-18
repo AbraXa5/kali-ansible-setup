@@ -85,4 +85,5 @@
     - feroxbuster
     - dex2jar
     - ghidra
+    - chromium
 # noqa: package-latest

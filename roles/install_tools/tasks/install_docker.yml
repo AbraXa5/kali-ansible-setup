@@ -36,6 +36,7 @@
   ansible.builtin.meta: reset_connection
 
 - name: Verify User can execute docker w/o sudo perms
+  become: true
   become_user: "{{ ansible_user }}"
   tags: debug
   ansible.builtin.command:

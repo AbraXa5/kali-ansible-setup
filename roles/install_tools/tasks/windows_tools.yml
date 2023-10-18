@@ -1,0 +1,44 @@
+# roles/install_tools/tasks/download_binaries.yml
+---
+- name: Check if the Tools directory exists
+  ansible.builtin.stat:
+    path: "{{ tools_dir }}"
+  register: tools_dir_stat
+
+- name: Create directories
+  ansible.builtin.file:
+    path: "{{ tools_dir }}/{{ item }}"
+    state: directory
+    mode: "0755"
+  loop:
+    - "bloodhound-ce"
+    - "windows-binaries"
+
+- name: Download enum files for windows
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "{{ tools_dir }}/{{ item | basename }}"
+    mode: "0755"
+  loop:
+    - "https://raw.githubusercontent.com/61106960/adPEAS/main/adPEAS.ps1"
+    - "https://raw.githubusercontent.com/Leo4j/Invoke-ADEnum/main/Invoke-ADEnum.ps1"
+    - "https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1"
+
+- name: Download Bloodhound CE compose
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/SpecterOps/bloodhound/main/examples/docker-compose/docker-compose.yml"
+    dest: "{{ tools_dir }}/bloodhound-ce/docker-compose.yml"
+    mode: "0755"
+
+- name: Download windows binaries
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "{{ tools_dir }}/windows-binaries/{{ item.filename }}"
+    mode: "0755"
+    force: false
+  loop:
+    - "{{ windows_binaries }}"
+
+
+# https://github.com/OPENCYBER-FR/RustHound;cd RustHound;cargo build --release
+# cargo install rustcat

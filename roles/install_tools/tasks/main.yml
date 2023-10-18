@@ -73,6 +73,11 @@
   become_user: "{{ ansible_user }}"
   ansible.builtin.import_tasks: install_caido.yml
 
+- name: Download windows specific tools and
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.import_tasks: windows_tools.yml
+
 - name: Update Database
   become: true
   ansible.builtin.import_tasks: update_db.yml

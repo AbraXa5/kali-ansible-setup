@@ -1,7 +1,6 @@
 # roles/install_tools/tasks/install_pipx.yml
 ---
 - name: Install pipx
-  become_user: "{{ ansible_user }}"
   environment:
     PIP_REQUIRE_VIRTUALENV: "false"
   ansible.builtin.pip:
@@ -9,13 +8,11 @@
     state: present
 
 - name: Set pipx path
-  become_user: "{{ ansible_user }}"
   ansible.builtin.command: python3 -m pipx ensurepath
   args:
     creates: "/home/{{ ansible_user }}/.local/bin/pipx"
 
 - name: Install pipx modules
-  become_user: "{{ ansible_user }}"
   community.general.pipx:
     name: "{{ item }}"
     state: latest

@@ -183,3 +183,28 @@ pip_packages:
 # setup_bloodhound
 bloodhound_version: "4.2.0"
 bloodhound_arch: "linux-x64"
+
+# windows_tools
+
+adpeas_version: "main"
+adenum_version: "main"
+
+windows_binaries:
+  - url: "https://github.com/itm4n/FullPowers/releases/download/v0.1/FullPowers.exe"
+    filename: "FullPowers.exe"
+  - url: "https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe"
+    filename: "PrintSpoofer64.exe"
+  - url: "https://github.com/BeichenDream/GodPotato/releases/download/V1.20/GodPotato-NET4.exe"
+    filename: "GodPotato-NET4.exe"
+  - url: "https://github.com/antonioCoco/RoguePotato/releases/download/1.0/RoguePotato.zip"
+    filename: "RoguePotato.zip"
+  - url: "https://github.com/Flangvik/SharpCollection/blob/master/NetFramework_4.5_x64/SweetPotato.exe"
+    filename: "SweetPotato.exe"
+  - url: "https://raw.githubusercontent.com/r3motecontrol/Ghostpack-CompiledBinaries/master/SharpUp.exe"
+    filename: "SharpUp.exe"
+  - url: "https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule"
+    filename: "OneRuleToRuleThemAll.rule"
+  - url: "https://github.com/carlospolop/winPE/blob/master/binaries/seatbelt/SeatbeltNet4AnyCPU.exe"
+    filename: "SeatbeltNet4AnyCPU.exe"
+  - url: "https://github.com/andrew-d/static-binaries/raw/master/binaries/windows/x86/nmap.exe"
+    filename: "nmap.exe"

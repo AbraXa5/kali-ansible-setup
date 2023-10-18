@@ -6,7 +6,6 @@
   register: fzf_dir_stat
 
 - name: Clone FZF repo
-  become_user: "{{ ansible_user }}"
   ansible.builtin.git:
     repo: "https://github.com/junegunn/fzf.git"
     dest: "{{ fzf_dir }}"
@@ -15,7 +14,6 @@
     # noqa: latest
 
 - name: Run fzf install script w/o updating rc files
-  become_user: "{{ ansible_user }}"
   # ansible.builtin.command: "{{ fzf_dir }}/install --key-bindings --completion --no-update-rc --no-bash --no-zsh"
   ansible.builtin.command: "{{ fzf_dir }}/install --no-update-rc --no-bash --no-zsh"
   changed_when: false

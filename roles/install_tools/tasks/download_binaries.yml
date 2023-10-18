@@ -131,7 +131,7 @@
       filename: "jython-standalone-{{ jython_version }}.jar"
     - url: "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
       filename: "burpsuite_{{ burpsuite_version }}.jar"
-    # java -jar -Xmx2G /home/kali/Tools/Burpsuite/burpsuite_community_v2023.2.4.jar
+    # java -jar -Xmx2G /home/kali/Tools/Burpsuite/burpsuite_community_v2023.10.2.2.jar
   # when: not item.stat.exists
 
 - name: Create shell.sh
