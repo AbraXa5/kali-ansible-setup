@@ -32,6 +32,9 @@
     - libpng-dev
     - libssl-dev
     - libffi-dev
+    # kerberos dependencies
+    - libkrb5-dev
+    - krb5-config
 # noqa: package-latest
 
 - name: Install additional helper packages

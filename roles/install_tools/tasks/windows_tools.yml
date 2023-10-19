@@ -36,9 +36,6 @@
     dest: "{{ tools_dir }}/windows-binaries/{{ item.filename }}"
     mode: "0755"
     force: false
-  loop:
-    - "{{ windows_binaries }}"
-
-
+  loop: "{{ windows_binaries }}"
 # https://github.com/OPENCYBER-FR/RustHound;cd RustHound;cargo build --release
 # cargo install rustcat
