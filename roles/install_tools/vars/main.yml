@@ -16,7 +16,7 @@ burp_binaries:
     filename: "burpsuite_{{ burpsuite_version }}.jar"
 
 # fix_evil-winrm
-ruby_version: "3.2.2"
+ruby_version: "3.1.2"
 
 # Github repos to clone
 github_repos:
@@ -83,6 +83,7 @@ github_repos:
   - "https://github.com/p0dalirius/LDAPmonitor.git"
   - "https://github.com/ShutdownRepo/pyWhisker.git"
   - "https://github.com/Syzik/DockerRegistryGrabber.git"
+  - "https://github.com/WangYihang/Platypus.git"
 
 # install_cargo
 cargo_dir: "/home/{{ ansible_user }}/.cargo"
@@ -122,7 +123,6 @@ golang_tools_repos:
   - github.com/ropnop/kerbrute
   - github.com/ndelphit/apkurlgrep
   - github.com/ropnop/go-windapsearch/cmd/windapsearch
-  - github.com/WangYihang/Platypus
 
 #  install_nvm
 nvm_version: "0.39.3"
@@ -170,18 +170,18 @@ pip_packages:
   - aclpwn
 
 pipx_git_install_tools:
-  - name: certi.py
-    src: git+https://github.com/zer1t0/certi.git
   - name: ldeep
     src: git+https://github.com/franc-pentest/ldeep
+  # - name: certi.py
+  #   src: git+https://github.com/zer1t0/certi.git
   # - name: pre2k
   #   src: git+https://github.com/garrettfoster13/pre2k.git
   # - name: DonPAPI
   #   src: git+https://github.com/login-securite/DonPAPI.git
   - name: bloodyAD
     src: git+https://github.com/CravateRouge/bloodyAD.git
-  - name: autobloody.git
-    src: git+https://github.com/CravateRouge/autobloody.git
+  - name: autobloody
+    src: git+https://github.com/CravateRouge/autobloody
   - name: kerberoast
     src: git+https://github.com/skelsec/kerberoast.git
   - name: impacket
