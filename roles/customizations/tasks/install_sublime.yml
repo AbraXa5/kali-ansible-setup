@@ -19,6 +19,7 @@
 
 # Config dirs not created before first run
 - name: Create sublime user package directory
+  become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.file:
     path: "{{ sublime_config_dir }}"
@@ -27,6 +28,7 @@
     mode: "0700"
 
 - name: Copy Sublime preferences
+  become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.copy:
     remote_src: false
