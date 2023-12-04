@@ -35,6 +35,8 @@
     # kerberos dependencies
     - libkrb5-dev
     - krb5-config
+    - krb5-user
+    - cifs-utils
 # noqa: package-latest
 
 - name: Install additional helper packages
@@ -60,7 +62,7 @@
     - peco
     - jq
     - yq
-    # - chromium
+    - chromium
     - ltrace
     - extract
     - toilet
@@ -89,4 +91,8 @@
     - dex2jar
     - ghidra
     - chromium
+    - mono-complete
+    - proxychains
+    - rlwrap
+    # - tesseract-ocr
 # noqa: package-latest
