@@ -23,6 +23,7 @@
     - "https://raw.githubusercontent.com/61106960/adPEAS/main/adPEAS.ps1"
     - "https://raw.githubusercontent.com/Leo4j/Invoke-ADEnum/main/Invoke-ADEnum.ps1"
     - "https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Recon/PowerView.ps1"
+    - "https://raw.githubusercontent.com/swisskyrepo/SSRFmap/master/data/ports"
 
 - name: Download Bloodhound CE compose
   ansible.builtin.get_url:

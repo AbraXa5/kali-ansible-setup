@@ -2,13 +2,12 @@
 # vars file for install_tools
 # download_binaries
 tools_dir: "/home/{{ ansible_user }}/Tools"
-peas_version: "20231015-0ad0e48c"
-chisel_version: "1.9.1"
+peas_version: "20231203-9cdcb38f"
 pspy_version: "1.2.1"
 mimikatz_version: "2.2.0-20220919"
 aquatone_version: "1.7.0"
 jython_version: "2.7.3"
-burpsuite_version: "2023.10.2.2"
+burpsuite_version: "2023.11.1.2"
 burp_binaries:
   - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
     filename: "jython-standalone-{{ jython_version }}.jar"
@@ -26,7 +25,6 @@ github_repos:
   - "https://github.com/CiscoCXSecurity/enum4linux.git"
   - "https://github.com/cddmp/enum4linux-ng.git"
   - "https://github.com/bitsadmin/wesng.git"
-  - "https://github.com/jaeles-project/gospider.git"
   - "https://github.com/ticarpi/jwt_tool.git"
   - "https://github.com/Srinivas11789/PcapXray.git"
   - "https://github.com/codingo/NoSQLMap.git"
@@ -83,7 +81,19 @@ github_repos:
   - "https://github.com/p0dalirius/LDAPmonitor.git"
   - "https://github.com/ShutdownRepo/pyWhisker.git"
   - "https://github.com/Syzik/DockerRegistryGrabber.git"
-  - "https://github.com/WangYihang/Platypus.git"
+  # - "https://github.com/WangYihang/Platypus.git"
+  - "https://github.com/ShutdownRepo/targetedKerberoast"
+  - "https://github.com/micahvandeusen/gMSADumper.git"
+  - "https://github.com/OPENCYBER-FR/RustHound.git"
+
+chisel_version: "1.9.1"
+chisel_platforms:
+  - name: "linux_amd64"
+    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_linux_amd64.gz"
+    binary_name: "chisel_linux_amd64"
+  - name: "windows_amd64"
+    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_windows_amd64.gz"
+    binary_name: "chisel_windows_amd64.exe"
 
 # install_cargo
 cargo_dir: "/home/{{ ansible_user }}/.cargo"
@@ -118,11 +128,14 @@ golang_tools_repos:
   - github.com/hakluke/hakrawler
   - github.com/hahwul/jwt-hack
   - github.com/antonmedv/fx
-  - github.com/homeport/dyff/cmd/dyff
   - github.com/jpillora/chisel
   - github.com/ropnop/kerbrute
   - github.com/ndelphit/apkurlgrep
   - github.com/ropnop/go-windapsearch/cmd/windapsearch
+  - github.com/jaeles-project/gospider
+  # HTML parsing with selectors
+  - github.com/ericchiang/pup
+  - github.com/projectdiscovery/katana/cmd/katana
 
 #  install_nvm
 nvm_version: "0.39.3"
@@ -136,17 +149,17 @@ pip_packages:
   - search-that-hash
   # - name-that-hash
   - crackmapexec
-  - ldapdomaindump
+  # - ldapdomaindump
   # - impacket
   - bloodhound
   - httpx
   - html2text
   - httpie
   - awscli
-  - mycli
-  - stegoveritas
-  - updog
-  - usbrip
+  # - mycli
+  # - stegoveritas
+  # - updog
+  # - usbrip
   - droopescan
   - git-dumper
   - git-vuln-finder
@@ -154,11 +167,11 @@ pip_packages:
   - arjun
   # - pylnk3
   - flask-unsign
-  - threader3000
+  # - threader3000
   # - asciinema
   - black
   - chardet
-  - shell-functools
+  # - shell-functools
   - s3recon
   - s3scanner
   # - prowler
@@ -168,6 +181,7 @@ pip_packages:
   # - coercer
   - pypykatz
   - aclpwn
+  - arsenal-cli
 
 pipx_git_install_tools:
   - name: ldeep
@@ -225,3 +239,7 @@ windows_binaries:
     filename: "SeatbeltNet4AnyCPU.exe"
   - url: "https://github.com/andrew-d/static-binaries/raw/master/binaries/windows/x86/nmap.exe"
     filename: "nmap.exe"
+
+cargo_tools:
+  - rustcat
+  - fd-find

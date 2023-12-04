@@ -18,13 +18,13 @@
     - "mimikatz-binaries"
     - "aquatone"
 
-- name: Download linpeas.sh script
+- name: Download linPEAS.sh script
   ansible.builtin.get_url:
     url: "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/linpeas.sh"
     dest: "{{ tools_dir }}/linpeas.sh"
     mode: "0755"
 
-- name: Download winpeas binaries
+- name: Download winPEAS
   ansible.builtin.get_url:
     url: "{{ item }}"
     dest: "{{ tools_dir }}/{{ item | basename }}"
@@ -32,6 +32,10 @@
   loop:
     - "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/winPEAS.bat"
     - "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/winPEASany.exe"
+    - "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/winPEASx64_ofs.exe"
+    - "https://github.com/carlospolop/PEASS-ng/releases/download/{{ peas_version }}/winPEASx86.exe"
+    - "https://raw.githubusercontent.com/carlospolop/PEASS-ng/master/winPEAS/winPEASps1/winPEAS.ps1"
+    - "https://gist.githubusercontent.com/AbraXa5/32484537bea025a66f74369bf8b9f711/raw/475f794b27f5748dd682b2cb817f6fdd35ae7586/Invoke-WinPEAS.txt"
 
 - name: Download Ivank Sineck PHP Rev shell
   ansible.builtin.get_url:
@@ -61,6 +65,8 @@
     - "https://gist.githubusercontent.com/Serizao/6a63f35715a8219be6b97da3e51567e7/raw/29fbedc0dbff471122297c0a121aacc6abce7a26/mini-reverse.ps1"
     - "https://raw.githubusercontent.com/WhiteWinterWolf/wwwolf-php-webshell/master/webshell.php"
     - "https://gist.githubusercontent.com/devzspy/a85856e6f17eeefb328b2c37810db6f6/raw/17091da536e5e22f04a4f3181d1b89a75f92e1d2/php-shell.php"
+    - "https://gist.githubusercontent.com/AbraXa5/81ec18193f1247628fa90ee9bbfe2f1f/raw/304aca44c6c19c6b7114374907808524af7236fd/reverseShell_ofs.ps1"
+    - "https://raw.githubusercontent.com/flozz/p0wny-shell/master/shell.php"
 
 - name: Download NodeJS Shells scripts
   ansible.builtin.get_url:
@@ -74,7 +80,6 @@
 - name: Download Archives
   ansible.builtin.get_url:
     url: "{{ item }}"
-    # dest: "{{ tools_dir }}/mimikatz-binaries/{{ item | basename }}"
     dest: "/tmp/{{ item | basename }}"
     mode: "0755"
   loop:
@@ -92,27 +97,32 @@
     - src: "/tmp/aquatone_linux_amd64_{{ aquatone_version }}.zip"
       dest: "{{ tools_dir }}/aquatone"
 
-- name: Check if chisel binary exists
+- name: Check if chisel binaries exist
   ansible.builtin.stat:
-    path: "{{ tools_dir }}/chisel/chisel_{{ chisel_version }}_linux_amd64"
+    path: "{{ tools_dir }}/chisel/{{ item.binary_name }}"
   register: chisel_binary
+  loop: "{{ chisel_platforms }}"
+  loop_control:
+    loop_var: item
 
-# unarchive supports .tar.gz but not .gz alone
-- name: Download binary
-  when: not chisel_binary.stat.exists
-  block:
+- name: Download binaries
+  ansible.builtin.block:
     - name: Download chisel archives
       ansible.builtin.get_url:
-        url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_linux_amd64.gz"
-        dest: "/tmp/chisel_{{ chisel_version }}_linux_amd64.gz"
+        url: "{{ item.url }}"
+        dest: "/tmp/chisel_{{ chisel_version }}_{{ item.name }}.gz"
         mode: "0755"
+      when: not chisel_binary.stat.exists
 
     - name: Extract chisel archives
       ansible.builtin.shell:
         chdir: "{{ tools_dir }}/chisel/"
-        cmd: "gunzip -d --no-name --stdout /tmp/chisel_{{ chisel_version }}_linux_amd64.gz > chisel_{{ chisel_version }}_linux_amd64"
-        creates: "chisel_{{ chisel_version }}_linux_amd64"
+        cmd: "gunzip -d --no-name --stdout /tmp/chisel_{{ chisel_version }}_{{ item.name }}.gz > {{ item.binary_name }}"
+        creates: "chisel_{{ chisel_version }}_{{ item.name }}"
       # noqa: command-instead-of-shell
+  loop: "{{ chisel_platforms }}"
+  loop_control:
+    loop_var: item
 
 - name: Create Burpsuite directory
   ansible.builtin.file:
