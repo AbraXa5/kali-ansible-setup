@@ -8,3 +8,9 @@
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.import_tasks: dotfiles.yml
+
+- name: Install startship theme
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.import_tasks: install_starship.yml
+  when: install_starship

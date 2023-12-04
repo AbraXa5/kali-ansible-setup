@@ -1,14 +1,12 @@
 # roles/dotfiles/tasks/install_tools.yml
 ---
 - name: Clone fzf repository
-  become_user: "{{ ansible_user }}"
   ansible.builtin.git:
     repo: https://github.com/junegunn/fzf.git
     dest: "/home/{{ ansible_user }}/.fzf"
     depth: 1
 
 - name: Install fzf w/o any shell modifications
-  become_user: "{{ ansible_user }}"
   ansible.builtin.shell:
     cmd: "/home/{{ ansible_user }}/.fzf/install --no-update-rc --no-bash --no-zsh"
   # noqa: command-instead-of-shell

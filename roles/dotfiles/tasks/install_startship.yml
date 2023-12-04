@@ -1,0 +1,10 @@
+# roles/dotfiles/tasks/install_starship.yml
+---
+- name: Install Starship prompt
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      curl -sS https://starship.rs/install.sh | sh
+  args:
+    creates: "/usr/bin/starship"
+  # noqa: command-instead-of-module
