@@ -243,5 +243,6 @@ windows_binaries:
     filename: "nmap.exe"
 
 cargo_tools:
+  - exa
   - rustcat
   - fd-find

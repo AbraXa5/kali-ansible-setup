@@ -9,7 +9,7 @@ starship: true
 # packages for dotfiles
 apt_packages:
   - bat
-  - exa
+  # - exa # Renoved from repos
   - silversearcher-ag
   - xclip
   - nnn
