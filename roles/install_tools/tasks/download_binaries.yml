@@ -97,32 +97,33 @@
     - src: "/tmp/aquatone_linux_amd64_{{ aquatone_version }}.zip"
       dest: "{{ tools_dir }}/aquatone"
 
-- name: Check if chisel binaries exist
+- name: Check if chisel binary exists
   ansible.builtin.stat:
     path: "{{ tools_dir }}/chisel/{{ item.binary_name }}"
-  register: chisel_binary
-  loop: "{{ chisel_platforms }}"
-  loop_control:
-    loop_var: item
+  register: chisel_binary_status
+  with_items: "{{ chisel_platforms }}"
 
-- name: Download binaries
-  ansible.builtin.block:
-    - name: Download chisel archives
-      ansible.builtin.get_url:
-        url: "{{ item.url }}"
-        dest: "/tmp/chisel_{{ chisel_version }}_{{ item.name }}.gz"
-        mode: "0755"
-      when: not chisel_binary.stat.exists
+- name: Debug chisel status
+  tags: debug
+  ansible.builtin.debug:
+    var: chisel_binary_status
 
-    - name: Extract chisel archives
-      ansible.builtin.shell:
-        chdir: "{{ tools_dir }}/chisel/"
-        cmd: "gunzip -d --no-name --stdout /tmp/chisel_{{ chisel_version }}_{{ item.name }}.gz > {{ item.binary_name }}"
-        creates: "chisel_{{ chisel_version }}_{{ item.name }}"
-      # noqa: command-instead-of-shell
-  loop: "{{ chisel_platforms }}"
-  loop_control:
-    loop_var: item
+- name: Download chisel binary if not present
+  ansible.builtin.get_url:
+    url: "{{ item.1.url }}"
+    dest: "/tmp/chisel_{{ chisel_version }}_{{ item.1.name }}.gz"
+    mode: "0755"
+  when: not chisel_binary_status.results[item.0].stat.exists
+  with_indexed_items: "{{ chisel_platforms }}"
+
+- name: Extract chisel archives
+  ansible.builtin.shell:
+    chdir: "{{ tools_dir }}/chisel/"
+    cmd: "gunzip -d --no-name --stdout /tmp/chisel_{{ chisel_version }}_{{ item.1.name }}.gz > {{ item.1.binary_name }}"
+    creates: "{{ tools_dir }}/chisel/chisel_{{ chisel_version }}_{{ item.1.binary_name }}"
+  when: not chisel_binary_status.results[item.0].stat.exists
+  with_indexed_items: "{{ chisel_platforms }}"
+  # noqa: command-instead-of-shell
 
 - name: Create Burpsuite directory
   ansible.builtin.file:
