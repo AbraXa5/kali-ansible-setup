@@ -25,12 +25,12 @@
           ansible.builtin.include_role:
             name: install_tools
 
-        - name: Customizations
-          ansible.builtin.include_role:
-            name: customizations
-          when: customize
-
         - name: Clone personal notes
           ansible.builtin.include_role:
             name: notes
           when: clone_notes
+
+        - name: Customizations
+          ansible.builtin.include_role:
+            name: customizations
+          when: customize
