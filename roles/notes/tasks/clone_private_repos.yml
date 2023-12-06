@@ -17,6 +17,7 @@
     update: true
     single_branch: false
     accept_newhostkey: true
+    depth: 1
   loop: "{{ private_repos }}"
   when: identiy_keys.files | length > 0
 # noqa: latest
