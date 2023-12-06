@@ -52,7 +52,7 @@
     - tmux
     - terminator
     - bat
-    - exa
+    # - exa # Removed from repos
     - gh
     - htop
     - silversearcher-ag
