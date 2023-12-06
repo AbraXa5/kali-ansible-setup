@@ -11,6 +11,8 @@
     dest: "{{ fzf_dir }}"
     update: true
     depth: 1
+  when:
+    not fzf_dir_stat.stat.exists
     # noqa: latest
 
 - name: Run fzf install script w/o updating rc files
