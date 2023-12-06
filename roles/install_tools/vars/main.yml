@@ -148,7 +148,7 @@ pip_packages:
   # - pwncat-cs
   - search-that-hash
   # - name-that-hash
-  - crackmapexec
+  # - crackmapexec Repo archived -> NetExec
   # - ldapdomaindump
   # - impacket
   - bloodhound
@@ -204,6 +204,8 @@ pipx_git_install_tools:
     src: git+https://github.com/Pennyw0rth/NetExec.git
   - name: pwncat-cs
     src: git+https://github.com/AbraXa5/pwncat.git
+  # - name: crackmapexec
+  #   src: git+https://github.com/byt3bl33d3r/CrackMapExec.git
 
 # setup_bloodhound
 bloodhound_version: "4.3.1"
