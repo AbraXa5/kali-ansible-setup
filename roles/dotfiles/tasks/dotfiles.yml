@@ -1,4 +1,11 @@
 ---
+- name: Check if private key exists
+  ansible.builtin.find:
+    paths: "/home/{{ ansible_user }}/.ssh"
+    patterns:
+      - "dotfiles*"
+  register: identiy_keys
+
 - name: Clone the bare repository
   ansible.builtin.git:
     repo: "{{  dotfiles_repo }}"
@@ -6,6 +13,7 @@
     version: "{{ dotfiles_version }}"
     bare: true
   register: git_clone
+  when: identiy_keys.files | length > 0
 
 - name: Attempt to checkout
   ansible.builtin.command:
@@ -17,12 +25,17 @@
 
 - name: Handle conflicting dotfiles
   block:
+    - name: Define conflicting_files
+      ansible.builtin.set_fact:
+        conflicting_files: []
+
     - name: Parse the output to get the list of conflicting files
       ansible.builtin.set_fact:
         conflicting_files: "{{ dotfiles_checkout.stderr | regex_findall('\\t(.*?\\n)', '\\t', '\\n') | map('regex_replace', '\\n$', '') | list }}"
       when: dotfiles_checkout is failed
 
     - name: Check conflicting files
+      tags: debug
       ansible.builtin.debug:
         var: conflicting_files
 
@@ -32,7 +45,7 @@
         dest: "/tmp/.dotfiles-backup/"
         remote_src: true
         mode: "0755"
-      loop: "{{ conflicting_files }}"
+      loop: "{{ conflicting_files | default([]) }}"
       register: copied_files
 
     - name: Remove original dotfiles
