@@ -14,7 +14,7 @@
         dest: "/tmp/rust_install.sh"
         mode: "0755"
 
-    - name: Run rust install script
+    - name: Run rust / cargo install script
       ansible.builtin.command: "/tmp/rust_install.sh --no-modify-path --profile default -y"
       args:
         creates: "{{ cargo_dir }}"
