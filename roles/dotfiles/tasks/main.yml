@@ -13,4 +13,4 @@
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.import_tasks: install_starship.yml
-  when: install_starship
+  when: starship
