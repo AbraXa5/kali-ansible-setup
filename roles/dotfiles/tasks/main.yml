@@ -9,7 +9,9 @@
   become_user: "{{ ansible_user }}"
   ansible.builtin.import_tasks: dotfiles.yml
 
+# FIXME: Interactive install script
 - name: Install startship theme
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.import_tasks: install_starship.yml
+  when: false

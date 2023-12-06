@@ -2,9 +2,8 @@
 ---
 - name: Install Starship prompt
   ansible.builtin.shell:
-    cmd: |
-      set -o pipefail
-      curl -sS https://starship.rs/install.sh | sh
+    cmd: curl -sS https://starship.rs/install.sh | sh
   args:
-    creates: "/usr/bin/starship"
+    creates: "/usr/local/bin/starship"
+  # noqa: risky-shell-pipe
   # noqa: command-instead-of-module
