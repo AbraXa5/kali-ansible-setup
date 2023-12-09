@@ -85,6 +85,8 @@ github_repos:
   - "https://github.com/ShutdownRepo/targetedKerberoast"
   - "https://github.com/micahvandeusen/gMSADumper.git"
   - "https://github.com/OPENCYBER-FR/RustHound.git"
+  - "https://github.com/S1lkys/SharpKiller"
+  - "https://github.com/ZeroMemoryEx/Amsi-Killer"
 
 chisel_version: "1.9.1"
 chisel_platforms:
@@ -241,6 +243,8 @@ windows_binaries:
     filename: "SeatbeltNet4AnyCPU.exe"
   - url: "https://github.com/andrew-d/static-binaries/raw/master/binaries/windows/x86/nmap.exe"
     filename: "nmap.exe"
+  - url: "https://github.com/S1lkys/SharpKiller/releases/download/1.1/Sharp-Killer.exe"
+    filename: "Sharp-Killer.exe"
 
 cargo_tools:
   - exa
