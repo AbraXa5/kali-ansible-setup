@@ -37,6 +37,7 @@
     - krb5-config
     - krb5-user
     - cifs-utils
+    - cmake
 # noqa: package-latest
 
 - name: Install additional helper packages
@@ -95,4 +96,5 @@
     - proxychains
     - rlwrap
     # - tesseract-ocr
+    - jd-gui
 # noqa: package-latest

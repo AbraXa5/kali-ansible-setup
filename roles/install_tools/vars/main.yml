@@ -87,6 +87,8 @@ github_repos:
   - "https://github.com/OPENCYBER-FR/RustHound.git"
   - "https://github.com/S1lkys/SharpKiller"
   - "https://github.com/ZeroMemoryEx/Amsi-Killer"
+  - "https://github.com/kozmer/log4j-shell-poc.git"
+  - "https://github.com/nikita-yfh/OneShot-C.git"
 
 chisel_version: "1.9.1"
 chisel_platforms:
@@ -138,6 +140,8 @@ golang_tools_repos:
   # HTML parsing with selectors
   - github.com/ericchiang/pup
   - github.com/projectdiscovery/katana/cmd/katana
+  # XSS Scanner
+  - github.com/hahwul/dalfox/v2
 
 #  install_nvm
 nvm_version: "0.39.3"
@@ -184,6 +188,9 @@ pip_packages:
   - pypykatz
   - aclpwn
   - arsenal-cli
+  - isort
+  - ruff
+  - poetry
 
 pipx_git_install_tools:
   - name: ldeep
