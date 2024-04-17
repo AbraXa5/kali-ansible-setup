@@ -38,13 +38,12 @@
     - "MesloLGS-NF-Bold-Italic.ttf"
   register: font_copy
 
-- name: Install fontconfig package
+- name: Install fontconfig package (if not already installed)
   become: true
   become_user: root
   ansible.builtin.apt:
     name: fontconfig
     state: present
-  when: "'fc-cache' not in ansible_system_capabilities"
 
 - name: Regenerate font cache
   ansible.builtin.command: fc-cache -f -v
