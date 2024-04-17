@@ -1,7 +1,7 @@
 # .github/workflows/ansible-lint.yml
 name: ansible-lint
 on:
-  pull_request:
+  [pull_request, push]:
     branches: ["main", "stable"]
   workflow_dispatch: # Run workflow manually (without waiting for the cron to be called), through the GitHub Actions Workflow page directly
 jobs:
