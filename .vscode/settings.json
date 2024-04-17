@@ -1,5 +1,5 @@
 {
-	"ansible.python.interpreterPath": "/home/abraxas/Documents/Projects/kali-ansible-setup/venv/bin/python",
+	"ansible.python.interpreterPath": "/home/abraxas/.local/share/virtualenvs/kali-ansible-setup-B-O_qMmK",
 	"cSpell.words": [
 		"Abra",
 		"autoclean",
@@ -13,6 +13,7 @@
 		"mimikatz",
 		"noqa",
 		"pacman",
+		"pipenv",
 		"pipx",
 		"pspy",
 		"rockyou",
