@@ -19,7 +19,7 @@ jobs:
         run: sudo apt install -y ansible
 
       - name: Install Ansible Colletion requirements
-        run: ansible-galaxy install -r requirements.yaml
+        run: ansible-galaxy install -r requirements.yml
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
