@@ -21,5 +21,8 @@ jobs:
       - name: Install Ansible Colletion requirements
         run: ansible-galaxy install -r requirements.yml
 
+      - name: Debug - List installed collections
+        run: ansible-galaxy collection list
+
       - name: Run ansible-lint
         uses: ansible/ansible-lint@main
