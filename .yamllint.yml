@@ -2,8 +2,9 @@
 extends: default
 
 rules:
-  line-length:
-    max: 260
+  line-length: disable
+  # line-length:
+  #   max: 260
 
   truthy:
     allowed-values: ["true", "false"]
@@ -11,4 +12,4 @@ rules:
 
   # comments:
   #   min-spaces-from-content: 1
-  comments-indentation: {}
+  comments-indentation: disable

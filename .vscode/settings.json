@@ -1,5 +1,5 @@
 {
-	"ansible.python.interpreterPath": "/home/abraxas/.local/share/virtualenvs/kali-ansible-setup-B-O_qMmK",
+	"ansible.python.interpreterPath": "/home/abraxas/.local/share/virtualenvs/kali-ansible-setup-B-O_qMmK/bin/python",
 	"cSpell.words": [
 		"Abra",
 		"autoclean",
