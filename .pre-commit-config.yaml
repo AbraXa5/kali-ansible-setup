@@ -19,7 +19,7 @@ repos:
       - id: yamllint
         files: \.(yaml|yml)$
         types: [file, yaml]
-        entry: yamllint --strict -f parsable
+        entry: yamllint --strict -f auto
 
   # # Ansible hooks
   # - repo: local

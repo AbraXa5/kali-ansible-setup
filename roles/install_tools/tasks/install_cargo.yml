@@ -20,7 +20,7 @@
         creates: "{{ cargo_dir }}"
 
 - name: Set PATH for cargo
-  set_fact:
+  ansible.builtin.set_fact:
     cargo_path: "/home/kali/.cargo/bin/cargo"
   environment:
     PATH: "{{ ansible_env.PATH }}:{{ cargo_path }}"
