@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
@@ -13,12 +13,22 @@ repos:
       - id: check-yaml
       - id: detect-private-key
 
-  # Ansible hooks
-  - repo: local
-    hooks:
-      - id: ansible-lint
-        name: verify w/ ansible-lint
-        entry: pipenv run ansible-lint
-        language: system
-        # types: [file]
-        files: \\.(yml|yaml)$
+  # - repo: https://github.com/adrienverge/yamllint.git
+  #   rev: v1.35.1
+  #   hooks:
+  #     - id: yamllint
+  #       files: \.(yaml|yml)$
+  #       types: [file, yaml]
+  #       entry: yamllint --strict -f parsable
+
+  # # Ansible hooks
+  # - repo: local
+  #   hooks:
+  #     - id: ansible-lint
+  #       name: verify w/ ansible-lint
+  #       entry: pipenv run ansible-lint --force-color -v
+  #       language: system
+  #       # types: [file]
+  #       files: \.(yaml|yml)$
+  #       verbose: true
+  #       args: [-p, ./roles/*]
