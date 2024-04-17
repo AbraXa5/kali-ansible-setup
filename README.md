@@ -1,6 +1,6 @@
 # Ansible Kali Setup
 
-[![asciicast](https://asciinema.org/a/598965.svg)](https://asciinema.org/a/598965?data-speed="3")
+[![ascii-cast](https://asciinema.org/a/598965.svg)](https://asciinema.org/a/598965?data-speed="3")
 
 ## Getting Started
 
@@ -70,12 +70,12 @@ Now ansible knows how to connect to the host via SSH using the identity key
 
 If you don't want to setup authN keys, password based authN can be done by setting these variables and installing the `sshpass` package
 
--   ansible_host
--   ansible_user
--   ansible_become_password
--   ansible_connection
--   ansible_ssh_user
--   ansible_ssh_pass
+- ansible_host
+- ansible_user
+- ansible_become_password
+- ansible_connection
+- ansible_ssh_user
+- ansible_ssh_pass
 
 Now the playbook can be run as,
 
@@ -99,16 +99,16 @@ ansible-playbook main.yml --limit=local -K
 
 The playbook has multiple roles with multiple tasks
 
--   first_run
-    -   Change Kali repo and add https support
--   dotfiles
-    -   Install my [dotfiles](https://github.com/AbraXa5/dotfiles)
--   install_tools
-    -   Install/ download required tools and binaries
--   customizations
-    -   Customize xfce4 panel, power settings and browser
--   notes
-    -   Clone my notes from private repos
+- first_run
+  - Change Kali repo and add https support
+- dotfiles
+  - Install my [dotfiles](https://github.com/AbraXa5/dotfiles)
+- install_tools
+  - Install/ download required tools and binaries
+- customizations
+  - Customize xfce4 panel, power settings and browser
+- notes
+  - Clone my notes from private repos
 
 This playbook setups my VM as per my preferences, and also uses private keys in certain roles (for example, notes), so comment out/ remove the roles you don't want from `main.yml` or `setup_kali.yml`.
 
@@ -116,7 +116,7 @@ This playbook setups my VM as per my preferences, and also uses private keys in 
 
 Role are located at `roles/<role_name>`. Each role has a directory structure similar to
 
-```
+```sh
 ├── defaults
 │   └── main.yml
 ├── files
@@ -130,13 +130,13 @@ Role are located at `roles/<role_name>`. Each role has a directory structure sim
     └── main.yml
 ```
 
--   `defaults` will contain default values for all variables
--   `vars` also contains values for variables used in the playbook but these have more precedence than default.
-    -   **If you need to change any variable values, this is where you do it**. _Only inline vars or command line assignment have greater precedence than the `var/main.yml` file_.
--   The files directory will contain files to be copied to the remote host
--   `tasks` is where the actual tasks are
-    -   The `tasks/main.yml` is the main file which imports/ includes all other tasks in the roles
-    -   Individual tasks cab be omitted from here
+- `defaults` will contain default values for all variables
+- `vars` also contains values for variables used in the playbook but these have more precedence than default.
+  - **If you need to change any variable values, this is where you do it**. _Only inline vars or command line assignment have greater precedence than the `var/main.yml` file_.
+- The files directory will contain files to be copied to the remote host
+- `tasks` is where the actual tasks are
+  - The `tasks/main.yml` is the main file which imports/ includes all other tasks in the roles
+  - Individual tasks cab be omitted from here
 
 Post customization you can list all available tasks using the command
 
@@ -156,4 +156,18 @@ Or
 
 ```sh
 ansible-playbook main.yml --limit=local -K
+```
+
+## Connecting to a VM on windows host
+
+Port forward to access the VM's SSH port on localhost port 2222
+
+```bash
+ssh -p 22 -L 2222:{VM IP on VMware adapter}:22 username@{HOST IP}
+```
+
+Add this entry to hosts.ini
+
+```bash
+kali.fwd   ansible_host=localhost   ansible_port=2222  ansible_user=kali  ansible_become_password='kali' ansible_connection=ssh ansible_ssh_user=kali ansible_ssh_pass=kali
 ```
