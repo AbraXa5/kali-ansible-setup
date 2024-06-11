@@ -2,7 +2,7 @@
 # vars file for install_tools
 # download_binaries
 tools_dir: "/home/{{ ansible_user }}/Tools"
-peas_version: "20231203-9cdcb38f"
+peas_version: "20240609-52b58bf5"
 pspy_version: "1.2.1"
 mimikatz_version: "2.2.0-20220919"
 aquatone_version: "1.7.0"
@@ -89,6 +89,7 @@ github_repos:
   - "https://github.com/ZeroMemoryEx/Amsi-Killer"
   - "https://github.com/kozmer/log4j-shell-poc.git"
   - "https://github.com/nikita-yfh/OneShot-C.git"
+  - "https://github.com/deeexcee-io/PowerShell-Reverse-Shell-Generator.git"
 
 chisel_version: "1.9.1"
 chisel_platforms:
@@ -144,7 +145,7 @@ golang_tools_repos:
   - github.com/hahwul/dalfox/v2
 
 #  install_nvm
-nvm_version: "0.39.3"
+nvm_version: "0.39.7"
 nvm_dir: "/home/{{ ansible_user }}/.nvm"
 
 # install_pipx
