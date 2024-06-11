@@ -97,4 +97,9 @@
     - rlwrap
     # - tesseract-ocr
     - jd-gui
+    - zbar-tools
+    - gdb
+    - libreoffice
+    - getsploit
+    - sploitscan
 # noqa: package-latest
