@@ -1,5 +1,7 @@
 # Ansible Kali Setup
 
+> An opinionated ansible playbook for setting up a Kali VM idempotently for CTFs.
+
 [![ascii-cast](https://asciinema.org/a/598965.svg)](https://asciinema.org/a/598965?data-speed="3")
 
 ## Getting Started
@@ -46,7 +48,9 @@ An entry like this depends on ssh config for the host ip and identity key
 kali.vm    ansible_user=kali  ansible_become_password='kali'
 ```
 
-### SSH Connection
+### COnnection Types
+
+#### SSH Connection
 
 To set up key based authentication
 
@@ -85,7 +89,7 @@ ansible-playbook main.yml --limit=kali.vm
 
 > If you don't to save passwords in a file, the `--ask-become-pass` flag can be used to pass the password at runtime. Ansible vault is also a good option
 
-### Local Connection
+#### Local Connection
 
 If you rather run the playbook locally on the VM that can be done by
 
@@ -94,6 +98,22 @@ ansible-playbook main.yml --limit=local -K
 ```
 
 > The local group is already defined in the inventory file
+
+*Make sure to reboot the VM post running the playbook. Since this is a local connection, ansible won't reboot it. Doing so would shut the control node which in this case is the VM itself.*
+
+#### Connecting to a VM on windows host
+
+Port forward to access the VM's SSH port on localhost port 2222
+
+```bash
+ssh -p 22 -L 2222:{VM IP on VMware adapter}:22 username@{HOST IP}
+```
+
+Add this entry to hosts.ini
+
+```bash
+kali.fwd   ansible_host=localhost   ansible_port=2222  ansible_user=kali  ansible_become_password='kali' ansible_connection=ssh ansible_ssh_user=kali ansible_ssh_pass=kali
+```
 
 ### Roles
 
@@ -132,7 +152,7 @@ Role are located at `roles/<role_name>`. Each role has a directory structure sim
 
 - `defaults` will contain default values for all variables
 - `vars` also contains values for variables used in the playbook but these have more precedence than default.
-  - **If you need to change any variable values, this is where you do it**. _Only inline vars or command line assignment have greater precedence than the `var/main.yml` file_.
+  - **If you need to change any variable values, this is where you do it**. *Only inline vars or command line assignment have greater precedence than the `var/main.yml` file*.
 - The files directory will contain files to be copied to the remote host
 - `tasks` is where the actual tasks are
   - The `tasks/main.yml` is the main file which imports/ includes all other tasks in the roles
@@ -158,16 +178,4 @@ Or
 ansible-playbook main.yml --limit=local -K
 ```
 
-## Connecting to a VM on windows host
-
-Port forward to access the VM's SSH port on localhost port 2222
-
-```bash
-ssh -p 22 -L 2222:{VM IP on VMware adapter}:22 username@{HOST IP}
-```
-
-Add this entry to hosts.ini
-
-```bash
-kali.fwd   ansible_host=localhost   ansible_port=2222  ansible_user=kali  ansible_become_password='kali' ansible_connection=ssh ansible_ssh_user=kali ansible_ssh_pass=kali
-```
+> A couple tasks depend on the facts gathered during the playbook, if you indent to turn that off, modify the tasks accordingly. Search for `ansible.builtin.set_fact` in the codebase.
