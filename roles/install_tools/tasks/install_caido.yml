@@ -12,8 +12,8 @@
     dest: "{{ tools_dir }}/Caido/{{ item | basename }}"
     mode: "0755"
   loop:
-    - "https://storage.googleapis.com/caido-releases/v{{ caido_version }}/caido-desktop-{{ base_os }}-v{{ caido_version }}-{{ caido_desktop_hash }}.AppImage"
-    - "https://storage.googleapis.com/caido-releases/v{{ caido_version }}/caido-{{ base_os }}-v{{ caido_version }}-{{ caido_cli_hash }}.tar.gz"
+    - "https://storage.googleapis.com/caido-releases/v{{ caido_version }}/caido-desktop-v{{ caido_version }}-{{ base_os }}-x86_64.AppImage"
+    - "https://storage.googleapis.com/caido-releases/v{{ caido_version }}/caido-cli-v{{ caido_version }}-{{ base_os }}-x86_64.tar.gz"
 
 - name: Extract cargo CLI
   ansible.builtin.unarchive:
