@@ -18,5 +18,5 @@
 - name: Extract cargo CLI
   ansible.builtin.unarchive:
     remote_src: true
-    src: "{{ tools_dir }}/Caido/caido-{{ base_os }}-v{{ caido_version }}-{{ caido_cli_hash }}.tar.gz"
+    src: "{{ tools_dir }}/Caido/caido-cli-v{{ caido_version }}-{{ base_os }}-x86_64.tar.gz"
     dest: "{{ tools_dir }}/Caido/"
