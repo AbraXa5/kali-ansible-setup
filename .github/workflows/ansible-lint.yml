@@ -24,16 +24,11 @@ jobs:
       - name: Debug - List installed collections
         run: ansible-galaxy collection list
 
-      - name: Run ansible-lint
-        uses: ansible/ansible-lint@main
-
       - name: Install ansible-lint with pip
         run: |
           sudo apt update
           sudo apt install pip
           pip install ansible ansible-lint
 
-      - name: Run ansible-lint on our repo
-        run: |
-          ansible-galaxy install -r requirements.yml
-          ansible-lint -v -s --project-dir .
+      - name: Run ansible-lint on the code base
+        run: ansible-lint -v -s --project-dir .
