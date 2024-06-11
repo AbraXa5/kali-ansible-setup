@@ -24,7 +24,7 @@
   tags: debug
   become: true
   become_user: "{{ ansible_user }}"
-  ansible.builtin.shell: source .zshrc && echo $GOPATH
+  ansible.builtin.shell: source $HOME/.zshrc && echo $GOPATH
   args:
     executable: /bin/zsh
   register: source_result

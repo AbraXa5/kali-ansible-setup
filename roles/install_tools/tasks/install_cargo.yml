@@ -26,6 +26,8 @@
     PATH: "{{ ansible_env.PATH }}:{{ cargo_path }}"
 
 - name: Install cargo packages
+  environment:
+    PATH: "{{ ansible_env.PATH }}:{{ cargo_path }}"
   community.general.cargo:
     name: "{{ item }}"
   loop: "{{ cargo_tools }}"
