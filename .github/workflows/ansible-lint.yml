@@ -15,20 +15,17 @@ jobs:
       - name: Checkout Sources
         uses: actions/checkout@v4
 
-      - name: Install Ansible
-        run: sudo apt install -y ansible
+      - name: Install ansible and ansible-lint with pip
+        run: |
+          sudo apt update
+          sudo apt install pip
+          pip install ansible ansible-lint
 
       - name: Install Ansible Colletion requirements
         run: ansible-galaxy install -r requirements.yml
 
       - name: Debug - List installed collections
         run: ansible-galaxy collection list
-
-      - name: Install ansible-lint with pip
-        run: |
-          sudo apt update
-          sudo apt install pip
-          pip install ansible ansible-lint
 
       - name: Run ansible-lint on the code base
         run: ansible-lint -v -s --project-dir .
