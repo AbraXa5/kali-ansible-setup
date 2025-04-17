@@ -2,12 +2,12 @@
 # vars file for install_tools
 # download_binaries
 tools_dir: "/home/{{ ansible_user }}/Tools"
-peas_version: "20240609-52b58bf5"
+peas_version: "20250401-a1b119bc"
 pspy_version: "1.2.1"
 mimikatz_version: "2.2.0-20220919"
 aquatone_version: "1.7.0"
-jython_version: "2.7.3"
-burpsuite_version: "2023.11.1.2"
+jython_version: "2.7.4"
+burpsuite_version: "2025.2.2"
 burp_binaries:
   - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
     filename: "jython-standalone-{{ jython_version }}.jar"
@@ -85,13 +85,13 @@ github_repos:
   - "https://github.com/ShutdownRepo/targetedKerberoast"
   - "https://github.com/micahvandeusen/gMSADumper.git"
   - "https://github.com/OPENCYBER-FR/RustHound.git"
-  - "https://github.com/S1lkys/SharpKiller"
-  - "https://github.com/ZeroMemoryEx/Amsi-Killer"
+  - "https://github.com/S1lkys/SharpKiller.git"
+  - "https://github.com/ZeroMemoryEx/Amsi-Killer.git"
   - "https://github.com/kozmer/log4j-shell-poc.git"
   - "https://github.com/nikita-yfh/OneShot-C.git"
   - "https://github.com/deeexcee-io/PowerShell-Reverse-Shell-Generator.git"
 
-chisel_version: "1.9.1"
+chisel_version: "1.10.1"
 chisel_platforms:
   - name: "linux_amd64"
     url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_linux_amd64.gz"
@@ -145,8 +145,8 @@ golang_tools_repos:
   - github.com/hahwul/dalfox/v2
 
 #  install_nvm
-nvm_version: "0.39.7"
-nvm_dir: "/home/{{ ansible_user }}/.nvm"
+nvm_version: "0.40.2"
+nvm_dir: "/home/{{ ansible_user }}/.nvm/"
 
 # install_pipx
 pip_packages:
@@ -210,10 +210,12 @@ pipx_git_install_tools:
     src: git+https://github.com/skelsec/kerberoast.git
   - name: impacket
     src: git+https://github.com/fortra/impacket.git
-  - name: NetExec
-    src: git+https://github.com/Pennyw0rth/NetExec.git
+  # FIXME: Potentaiul breaking issue
+  - name: netexec
+    src: https://github.com/Pennyw0rth/NetExec.git
   - name: pwncat-cs
     src: git+https://github.com/AbraXa5/pwncat.git
+  # FIXME: Pipx build fails due to rust. Need to reload shell session to install rust
   # - name: crackmapexec
   #   src: git+https://github.com/byt3bl33d3r/CrackMapExec.git
 
@@ -222,7 +224,7 @@ bloodhound_version: "4.3.1"
 bloodhound_arch: "linux-x64"
 
 # install_caido
-caido_version: "0.37.0"
+caido_version: "0.47.1"
 base_os: "linux"
 
 # windows_tools
@@ -241,8 +243,6 @@ windows_binaries:
     filename: "RoguePotato.zip"
   - url: "https://github.com/Flangvik/SharpCollection/blob/master/NetFramework_4.5_x64/SweetPotato.exe"
     filename: "SweetPotato.exe"
-  - url: "https://raw.githubusercontent.com/r3motecontrol/Ghostpack-CompiledBinaries/master/SharpUp.exe"
-    filename: "SharpUp.exe"
   - url: "https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule"
     filename: "OneRuleToRuleThemAll.rule"
   - url: "https://github.com/carlospolop/winPE/blob/master/binaries/seatbelt/SeatbeltNet4AnyCPU.exe"
@@ -251,6 +251,16 @@ windows_binaries:
     filename: "nmap.exe"
   - url: "https://github.com/S1lkys/SharpKiller/releases/download/1.1/Sharp-Killer.exe"
     filename: "Sharp-Killer.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/Certify.exe"
+    filename: "Certify.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/SafetyKatz.exe"
+    filename: "SafetyKatz.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/Seatbelt.exe"
+    filename: "Seatbelt.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/SharpUp.exe"
+    filename: "SharpUp.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/Rubeus.exe"
+    filename: "Rubeus.exe"
 
 cargo_tools:
   - exa
