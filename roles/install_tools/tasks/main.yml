@@ -41,6 +41,7 @@
     - nvm
     - tools
   ansible.builtin.import_tasks: install_nvm.yml
+  when: false
 
 - name: Install pipx
   become: true
@@ -67,6 +68,7 @@
 - name: Fix Evil WinRM
   become: true
   ansible.builtin.import_tasks: fix_evil_winrm.yml
+  when: false # FIXME: Redo readline
 
 - name: Download Caido
   become: true
