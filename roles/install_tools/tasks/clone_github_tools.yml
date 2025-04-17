@@ -12,4 +12,9 @@
     single_branch: true
     accept_newhostkey: true
   loop: "{{ github_repos }}"
+  register: git_result
+  retries: 3
+  delay: 10
+  until: git_result is not failed
 # noqa: latest
+
