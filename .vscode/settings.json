@@ -26,7 +26,7 @@
 	"editor.insertSpaces": false,
 	"files.associations": {
 		"*.env": "env",
-		"*.yml": "ansible"
+		"*.yml": "yaml"
 	},
 	"files.exclude": {
 		".git": true
@@ -58,5 +58,7 @@
 		"titleBar.inactiveBackground": "#f9e64f99",
 		"titleBar.inactiveForeground": "#15202b99"
 	},
-	"peacock.remoteColor": "#f9e64f"
+	"peacock.remoteColor": "#f9e64f",
+	"python-envs.defaultEnvManager": "ms-python.python:system",
+	"python-envs.pythonProjects": []
 }

@@ -4,8 +4,8 @@
   gather_facts: true
   vars:
     new_vm: true
-    setup_dotfiles: false
-    clone_notes: false
+    setup_dotfiles: true
+    clone_notes: true
     customize: true
 
   tasks:

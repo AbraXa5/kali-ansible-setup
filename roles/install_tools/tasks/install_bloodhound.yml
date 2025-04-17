@@ -17,7 +17,7 @@
     mode: "0755"
   register: create_collector_dir
 
-- name: Download collectors
+- name: Download bloodhound collectors
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.get_url:
@@ -31,7 +31,7 @@
   # noqa: no-handler
   # when: create_collector_dir.changed
 
-- name: Download from releases
+- name: Download bloodhound from releases
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.get_url:
@@ -41,7 +41,7 @@
   when: true
   register: download_archive
 
-- name: Extract downloaded archive
+- name: Extract downloaded bloodhound archive
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.unarchive:
