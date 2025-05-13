@@ -1,0 +1,26 @@
+{
+    "initializationOptions": {
+        "settings": {
+            "configuration": "~/cfg/ruff.toml",
+            // The strategy to use when resolving settings across editor and the filesystem. By default, editor configuration is prioritized over ruff.toml and pyproject.toml files.
+            "configurationPreference": "editorFirst",
+            // Whether to enable Ruff's preview mode when formatting.
+            "format.preview": true,
+            // The line length to use for the linter and formatter.
+            "lineLength": 88,
+            // Whether to enable linting. Set to false to use Ruff exclusively as a formatter.
+            "lint.enable": true,
+
+            // Sets the tracing level for the extension.
+            "logLevel": "error",
+            // Whether to register Ruff as capable of handling source.organizeImports actions.
+            "organizeImports": true,
+            // Whether to register Ruff as capable of handling source.fixAll actions.
+            "fixAll": true,
+            // Whether to display Quick Fix actions to autofix violations.
+            "codeAction.fixViolation.enable": true,
+            // Whether to display Quick Fix actions to disable rules via noqa suppression comments.
+            "codeAction.disableRuleComment.enable": true,
+        },
+    },
+}
