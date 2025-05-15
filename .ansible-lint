@@ -5,6 +5,6 @@ skip_list:
     - var-naming[no-role-prefix]
 
 warn_list:
-  - yaml[empty-lines]
+    - yaml[empty-lines]
 
 offline: false
