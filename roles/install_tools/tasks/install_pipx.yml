@@ -1,7 +1,7 @@
 # roles/install_tools/tasks/install_pipx.yml
 ---
 # Redundant with new kali python installation configs
-#- name: Install pipx
+# - name: Install pipx
 #  environment:
 #    PIP_REQUIRE_VIRTUALENV: "false"
 #  ansible.builtin.pip:
