@@ -17,4 +17,3 @@
   delay: 10
   until: git_result is not failed
 # noqa: latest
-
