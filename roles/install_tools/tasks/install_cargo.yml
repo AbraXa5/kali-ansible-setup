@@ -22,8 +22,8 @@
 - name: Set PATH for cargo
   ansible.builtin.set_fact:
     cargo_path: "/home/kali/.cargo/bin/"
-  #environment:
-    #PATH: "{{ ansible_env.PATH }}:{{ cargo_path }}"
+  # environment:
+    # PATH: "{{ ansible_env.PATH }}:{{ cargo_path }}"
 
 - name: Install cargo packages
   environment:
