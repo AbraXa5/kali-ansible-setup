@@ -1,5 +1,5 @@
 ---
-# vars file for install_tools
+# defaults fallback; maintained values live in vars/main.yml
 # download_binaries
 tools_dir: "/home/{{ ansible_user }}/Tools"
 peas_version: "20230319"

@@ -8,6 +8,8 @@
 
 Ansible is required on the controller host to run the playbook
 
+Tested with Ansible 2.17+ on Debian/Ubuntu/Kali controllers.
+
 ```sh
 pipx install ansible --include-deps
 ```
@@ -25,12 +27,18 @@ ansible-galaxy collection install --upgrade -r requirements.yml
 ansible-galaxy role install --force -r requirements.yml
 ```
 
+Quick sanity checks
+
+```sh
+ansible-playbook main.yml --syntax-check
+ansible-playbook main.yml --list-tasks
+```
+
 ## Usage
 
 ### Inventory
 
-By default the playbook is set to run against all hosts defined in the `hosts.ini` file as per the `ansible.cfg` file
-By default ansible connects to the host with the username the playbook is run as, if this user doesn't exist on the host then it can be defined in the inventory files as `ansible_user`
+By default the playbook runs against hosts in `hosts.ini` (set via `ansible.cfg`). Ansible connects with the controller username unless you set `ansible_user` in the inventory.
 
 To add/ edit hosts, edit the inventory file, for example
 
@@ -48,7 +56,7 @@ An entry like this depends on ssh config for the host ip and identity key
 kali.vm    ansible_user=kali  ansible_become_password='kali'
 ```
 
-### COnnection Types
+### Connection Types
 
 #### SSH Connection
 
@@ -87,7 +95,7 @@ Now the playbook can be run as,
 ansible-playbook main.yml --limit=kali.vm
 ```
 
-> If you don't to save passwords in a file, the `--ask-become-pass` flag can be used to pass the password at runtime. Ansible vault is also a good option
+> If you don't want to save passwords in a file, the `--ask-become-pass` flag can be used at runtime. Ansible vault is also a good option
 
 #### Local Connection
 
@@ -125,12 +133,15 @@ The playbook has multiple roles with multiple tasks
   - Install my [dotfiles](https://github.com/AbraXa5/dotfiles)
 - install_tools
   - Install/ download required tools and binaries
+  - Versions are maintained in `roles/install_tools/vars/main.yml`
 - customizations
   - Customize xfce4 panel, power settings and browser
 - notes
   - Clone my notes from private repos
 
 This playbook setups my VM as per my preferences, and also uses private keys in certain roles (for example, notes), so comment out/ remove the roles you don't want from `main.yml` or `setup_kali.yml`.
+
+For roles needing private repos (dotfiles, notes), ensure the controller has SSH access to those repos; use vault or runtime prompts instead of storing passwords in inventory if needed.
 
 ### Customizing Roles
 
