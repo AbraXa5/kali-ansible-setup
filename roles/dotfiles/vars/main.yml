@@ -16,7 +16,7 @@ apt_packages:
   - peco
   - jq
   - python3
-  - python3-pip
+  # - python3-pip  # managed by uv
   - python3-venv
   - unzip
   - nmap
@@ -34,7 +34,7 @@ pacman_packages:
   - peco
   - jq
   - python3
-  - python3-pip
+  # - python3-pip  # managed by uv
   - python3-venv
   - unzip
   - nmap

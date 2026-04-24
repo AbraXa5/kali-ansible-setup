@@ -26,8 +26,9 @@
       }}"
     mode: "0755"
   loop:
-    - https://raw.githubusercontent.com/BloodHoundAD/BloodHound/master/Collectors/SharpHound.exe
-    - https://raw.githubusercontent.com/BloodHoundAD/BloodHound/master/Collectors/SharpHound.ps1
+    # BloodHoundAD/BloodHound (v4) is archived; SharpHound is now at SpecterOps/SharpHound
+    - https://github.com/SpecterOps/SharpHound/releases/latest/download/SharpHound.exe
+    - https://github.com/SpecterOps/SharpHound/releases/latest/download/SharpHound.ps1
   # TODO: Find a better and idempotent way to do this, other than using stat
   # noqa: no-handler
   # when: create_collector_dir.changed

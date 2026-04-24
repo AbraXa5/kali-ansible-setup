@@ -9,8 +9,8 @@
 - name: Install fzf w/o any shell modifications
   ansible.builtin.shell:
     cmd: "/home/{{ ansible_user }}/.fzf/install --no-update-rc --no-bash --no-zsh"
+  changed_when: false
   # noqa: command-instead-of-shell
-  # noqa: no-changed-when
 
 - name: Install packages with apt
   ansible.builtin.apt:

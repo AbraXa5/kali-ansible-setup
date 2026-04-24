@@ -79,11 +79,13 @@
 - name: Download Caido
   become: true
   become_user: "{{ ansible_user }}"
+  tags: tools
   ansible.builtin.import_tasks: install_caido.yml
 
-- name: Download windows specific tools and
+- name: Download Windows-specific tools
   become: true
   become_user: "{{ ansible_user }}"
+  tags: tools
   ansible.builtin.import_tasks: windows_tools.yml
 
 - name: Update Database

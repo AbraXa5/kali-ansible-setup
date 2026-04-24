@@ -12,6 +12,7 @@
   become_user: "{{ ansible_user }}"
   ansible.builtin.blockinfile:
     path: "/home/{{ ansible_user }}/.zshrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - golang"
     block: |
       export GOPATH=$HOME/go
       export PATH=$PATH:$GOPATH/bin
@@ -20,8 +21,8 @@
 - name: Reset connection to load go lang env variables
   ansible.builtin.meta: reset_connection
 
-- name: Source .zshrc
-  tags: debug
+- name: Debug GOPATH in .zshrc
+  tags: debug, never
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: source $HOME/.zshrc && echo $GOPATH
@@ -30,8 +31,8 @@
   register: source_result
   changed_when: false
 
-- name: Debug .zshrc source with GOPATH
-  tags: debug
+- name: Debug GOPATH value
+  tags: debug, never
   ansible.builtin.debug:
     var: source_result.stdout
 
