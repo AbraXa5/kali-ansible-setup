@@ -1,5 +1,9 @@
 # roles/install_tools/tasks/install_pipx.yml
 ---
+# LEGACY: pipx install tasks — superseded by install_uv_tools.yml (uv tool install).
+# Kept for reference. To use, add `import_tasks: install_pipx.yml` in main.yml
+# and ensure pip_packages / pipx_git_install_tools are defined in vars.
+
 # Redundant with new kali python installation configs
 # - name: Install pipx
 #  environment:

@@ -1,0 +1,21 @@
+# roles/install_tools/tasks/install_uv_tools.yml
+---
+- name: Install uv tools from PyPI
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: >
+    /home/{{ ansible_user }}/.local/bin/uv tool install --upgrade {{ item }}
+  loop: "{{ uv_tools }}"
+  changed_when: false
+  environment:
+    HOME: "/home/{{ ansible_user }}"
+
+- name: Install uv tools from git
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: >
+    /home/{{ ansible_user }}/.local/bin/uv tool install --upgrade {{ item.src }}
+  loop: "{{ uv_git_tools }}"
+  changed_when: false
+  environment:
+    HOME: "/home/{{ ansible_user }}"

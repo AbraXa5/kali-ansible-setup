@@ -12,14 +12,22 @@ Ansible is required on the controller host to run the playbook
 
 Tested with Ansible 2.17+ on Debian/Ubuntu/Kali controllers.
 
+Install [uv](https://docs.astral.sh/uv/) (handles Python version management and dependencies):
+
 ```sh
-pipx install ansible --include-deps
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
-Or simply
+Install project dependencies (Ansible + ansible-lint) into a managed venv:
 
 ```sh
-sudo apt install ansible
+uv sync
+```
+
+Or to install Ansible globally:
+
+```sh
+uv tool install ansible --with ansible-lint
 ```
 
 Install community collections

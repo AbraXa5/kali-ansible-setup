@@ -140,10 +140,10 @@ golang_tools_repos:
 nvm_version: "0.39.3"
 nvm_dir: "/home/{{ ansible_user }}/.nvm"
 
-# install_pipx
-pip_packages:
+# install_uv_tools
+uv_tools:
   - cowsay
-  - pipenv
+  # - pipenv  # replaced by uv
   - pwncat-cs
   - pwncat
   - search-that-hash

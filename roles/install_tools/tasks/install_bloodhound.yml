@@ -32,25 +32,28 @@
   # noqa: no-handler
   # when: create_collector_dir.changed
 
-- name: Download bloodhound from releases
-  become: true
-  become_user: "{{ ansible_user }}"
-  ansible.builtin.get_url:
-    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/v{{
-      bloodhound_version }}/BloodHound-{{ bloodhound_arch }}.zip"
-    dest: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
-    mode: "0755"
-  when: true
-  register: download_archive
+  # NOTE: BloodHound CE (v5+) is Docker-based and has no binary .zip releases.
+  # The bloodhound_version var tracks CE releases (SpecterOps/BloodHound).
+  # For legacy standalone downloads see BloodHoundAD/BloodHound (<= v4.3.1).
+  # - name: Download bloodhound from releases
+  #   become: true
+  #   become_user: "{{ ansible_user }}"
+  #   ansible.builtin.get_url:
+  #     url: "https://github.com/SpecterOps/BloodHound/releases/download/v{{
+  #       bloodhound_version }}/BloodHound-{{ bloodhound_arch }}.zip"
+  #     dest: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
+  #     mode: "0755"
+  #   when: false
+  #   register: download_archive
 
-- name: Extract downloaded bloodhound archive
-  become: true
-  become_user: "{{ ansible_user }}"
-  ansible.builtin.unarchive:
-    remote_src: true
-    src: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
-    dest: "/home/{{ ansible_user }}/Tools/"
-    creates: "/home/{{ ansible_user }}/Tools/bloodhound-{{ bloodhound_arch }}"
-  when: download_archive.changed
+  # - name: Extract downloaded bloodhound archive
+  #   become: true
+  #   become_user: "{{ ansible_user }}"
+  #   ansible.builtin.unarchive:
+  #     remote_src: true
+  #     src: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
+  #     dest: "/home/{{ ansible_user }}/Tools/"
+  #     creates: "/home/{{ ansible_user }}/Tools/bloodhound-{{ bloodhound_arch }}"
+  #   when: download_archive.changed
 
-# noqa: no-handler
+  # noqa: no-handler

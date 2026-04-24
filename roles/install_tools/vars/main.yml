@@ -2,12 +2,12 @@
 # vars file for install_tools
 # download_binaries
 tools_dir: "/home/{{ ansible_user }}/Tools"
-peas_version: "20260201-2ddf3a96"
+peas_version: "20260422-9567fd62"
 pspy_version: "1.2.1"
 mimikatz_version: "2.2.0-20220919"
 aquatone_version: "1.7.0"
 jython_version: "2.7.4"
-burpsuite_version: "2025.12.5"
+burpsuite_version: "2026.3.3"
 burp_binaries:
   - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{
       jython_version }}/jython-standalone-{{ jython_version }}.jar"
@@ -92,7 +92,7 @@ github_repos:
   - "https://github.com/nikita-yfh/OneShot-C.git"
   - "https://github.com/deeexcee-io/PowerShell-Reverse-Shell-Generator.git"
 
-chisel_version: "1.11.3"
+chisel_version: "1.11.5"
 chisel_platforms:
   - name: "linux_amd64"
     url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version
@@ -131,7 +131,7 @@ golang_tools_repos:
   - github.com/tomnomnom/anew
   - github.com/projectdiscovery/subfinder/v2/cmd/subfinder
   - github.com/projectdiscovery/httpx/cmd/httpx
-  - github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+  - github.com/projectdiscovery/nuclei/v3/cmd/nuclei
   - github.com/projectdiscovery/tlsx/cmd/tlsx
   - github.com/hakluke/hakrawler
   - github.com/hahwul/jwt-hack
@@ -151,10 +151,10 @@ golang_tools_repos:
 nvm_version: "0.40.4"
 nvm_dir: "/home/{{ ansible_user }}/.nvm/"
 
-# install_pipx
-pip_packages:
+# install_uv_tools
+uv_tools:
   - cowsay
-  - pipenv
+  # - pipenv  # replaced by uv
   # - pwncat-cs
   - search-that-hash
   # - name-that-hash
@@ -196,7 +196,7 @@ pip_packages:
   - ruff
   - poetry
 
-pipx_git_install_tools:
+uv_git_tools:
   - name: ldeep
     src: git+https://github.com/franc-pentest/ldeep
   # - name: certi.py
@@ -223,11 +223,11 @@ pipx_git_install_tools:
   #   src: git+https://github.com/byt3bl33d3r/CrackMapExec.git
 
   # setup_bloodhound
-bloodhound_version: "8.5.2"
+bloodhound_version: "9.0.2"
 bloodhound_arch: "linux-x64"
 
 # install_caido
-caido_version: "0.55.3"
+caido_version: "0.56.0"
 base_os: "linux"
 
 # windows_tools

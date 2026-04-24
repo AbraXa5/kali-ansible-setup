@@ -43,11 +43,17 @@
   ansible.builtin.import_tasks: install_nvm.yml
   when: false
 
-- name: Install pipx
+- name: Install uv and Python 3.11
   become: true
   become_user: "{{ ansible_user }}"
-  tags: pipx
-  ansible.builtin.import_tasks: install_pipx.yml
+  tags: uv
+  ansible.builtin.import_tasks: install_uv.yml
+
+- name: Install uv tools
+  become: true
+  become_user: "{{ ansible_user }}"
+  tags: uv
+  ansible.builtin.import_tasks: install_uv_tools.yml
 
 - name: Install FZF
   become: true

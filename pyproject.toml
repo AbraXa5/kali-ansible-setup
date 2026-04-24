@@ -1,0 +1,9 @@
+[project]
+    name            = "kali-ansible-setup"
+    version         = "0.1.0"
+    description     = "Ansible playbook for setting up a Kali VM idempotently for CTFs"
+    requires-python = ">=3.11"
+    dependencies    = ["ansible", "ansible-lint"]
+
+[tool.uv]
+    dev-dependencies = []

@@ -18,17 +18,17 @@ repos:
     hooks:
       - id: yamllint
         files: \.(yaml|yml)$
-        types: [file, yaml]
+        types: [ file, yaml ]
         entry: yamllint --strict -f auto
 
-  # # Ansible hooks
-  # - repo: local
-  #   hooks:
-  #     - id: ansible-lint
-  #       name: verify w/ ansible-lint
-  #       entry: pipenv run ansible-lint --force-color -v
-  #       language: system
-  #       # types: [file]
-  #       files: \.(yaml|yml)$
-  #       verbose: true
-  #       args: [-p, ./roles/*]
+  # Ansible lint
+  - repo: local
+    hooks:
+      - id: ansible-lint
+        name: verify w/ ansible-lint
+        entry: uv run ansible-lint --force-color -v
+        language: system
+        # types: [file]
+        files: \.(yaml|yml)$
+        verbose: true
+        args: [ -p, ./roles/* ]

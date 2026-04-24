@@ -1,0 +1,52 @@
+# roles/install_tools/tasks/install_uv.yml
+---
+- name: Check if uv is already installed
+  ansible.builtin.stat:
+    path: "/home/{{ ansible_user }}/.local/bin/uv"
+  register: uv_bin
+
+- name: Download uv installer
+  when: not uv_bin.stat.exists
+  ansible.builtin.get_url:
+    url: "https://astral.sh/uv/install.sh"
+    dest: "/tmp/uv_install.sh"
+    mode: "0755"
+
+- name: Run uv installer
+  when: not uv_bin.stat.exists
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: "/tmp/uv_install.sh"
+  args:
+    creates: "/home/{{ ansible_user }}/.local/bin/uv"
+  environment:
+    HOME: "/home/{{ ansible_user }}"
+
+- name: Add uv to PATH in .zshrc
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.blockinfile:
+    path: "/home/{{ ansible_user }}/.zshrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - uv"
+    block: |
+      export PATH="$HOME/.local/bin:$PATH"
+    create: false
+
+- name: Install Python 3.11 via uv
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: "/home/{{ ansible_user }}/.local/bin/uv python install 3.11"
+  args:
+    creates: "/home/{{ ansible_user }}/.local/share/uv/python/cpython-3.11"
+  environment:
+    HOME: "/home/{{ ansible_user }}"
+
+- name: Pin Python 3.11 as default
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: "/home/{{ ansible_user }}/.local/bin/uv python pin 3.11"
+  args:
+    chdir: "/home/{{ ansible_user }}"
+  changed_when: false
+  environment:
+    HOME: "/home/{{ ansible_user }}"
