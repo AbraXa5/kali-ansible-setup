@@ -9,9 +9,11 @@ aquatone_version: "1.7.0"
 jython_version: "2.7.4"
 burpsuite_version: "2025.12.5"
 burp_binaries:
-  - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
+  - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{
+      jython_version }}/jython-standalone-{{ jython_version }}.jar"
     filename: "jython-standalone-{{ jython_version }}.jar"
-  - url: "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
+  - url: "https://portswigger-cdn.net/burp/releases/download?product=community&vers\
+      ion={{ burpsuite_version }}&type=Jar"
     filename: "burpsuite_{{ burpsuite_version }}.jar"
 
 # fix_evil-winrm
@@ -47,7 +49,7 @@ github_repos:
   - "https://github.com/flozz/p0wny-shell.git"
   - "https://github.com/antonioCoco/RunasCs.git"
   - "https://github.com/mrts/burp-suite-http-proxy-history-converter.git"
-  - "https://github.com/SecureAuthCorp/impacket.git"
+  - "https://github.com/fortra/impacket.git"
   - "https://github.com/The-Viper-One/ActiveDirectoryAttackTool.git"
   - "https://github.com/adrecon/ADRecon.git"
   - "https://github.com/breenmachine/RottenPotatoNG.git"
@@ -66,7 +68,6 @@ github_repos:
   - "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries.git"
   - "https://github.com/AlmondOffSec/PassTheCert.git"
   - "https://github.com/ffuf/ffuf"
-  - "https://github.com/tarunkant/Gopherus.git"
   - "https://github.com/pwndbg/pwndbg.git"
   - "https://github.com/DigitalInterruption/cookie-monster.git"
   - "https://github.com/stark0de/nginxpwner.git"
@@ -94,10 +95,12 @@ github_repos:
 chisel_version: "1.11.3"
 chisel_platforms:
   - name: "linux_amd64"
-    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_linux_amd64.gz"
+    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version
+      }}/chisel_{{ chisel_version }}_linux_amd64.gz"
     binary_name: "chisel_linux_amd64"
   - name: "windows_amd64"
-    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version }}/chisel_{{ chisel_version }}_windows_amd64.gz"
+    url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version
+      }}/chisel_{{ chisel_version }}_windows_amd64.gz"
     binary_name: "chisel_windows_amd64.exe"
 
 # install_cargo
@@ -219,7 +222,7 @@ pipx_git_install_tools:
   # - name: crackmapexec
   #   src: git+https://github.com/byt3bl33d3r/CrackMapExec.git
 
-# setup_bloodhound
+  # setup_bloodhound
 bloodhound_version: "8.5.2"
 bloodhound_arch: "linux-x64"
 
@@ -235,34 +238,47 @@ adenum_version: "main"
 windows_binaries:
   - url: "https://github.com/itm4n/FullPowers/releases/download/v0.1/FullPowers.exe"
     filename: "FullPowers.exe"
-  - url: "https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe"
+  - url: "https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer\
+      64.exe"
     filename: "PrintSpoofer64.exe"
-  - url: "https://github.com/BeichenDream/GodPotato/releases/download/V1.20/GodPotato-NET4.exe"
+  - url: "https://github.com/BeichenDream/GodPotato/releases/download/V1.20/GodPota\
+      to-NET4.exe"
     filename: "GodPotato-NET4.exe"
-  - url: "https://github.com/antonioCoco/RoguePotato/releases/download/1.0/RoguePotato.zip"
+  - url: "https://github.com/antonioCoco/RoguePotato/releases/download/1.0/RoguePot\
+      ato.zip"
     filename: "RoguePotato.zip"
-  - url: "https://github.com/Flangvik/SharpCollection/blob/master/NetFramework_4.5_x64/SweetPotato.exe"
+  - url: "https://raw.githubusercontent.com/Flangvik/SharpCollection/master/NetFram\
+      ework_4.5_x64/SweetPotato.exe"
     filename: "SweetPotato.exe"
-  - url: "https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule"
+  - url: "https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/mas\
+      ter/OneRuleToRuleThemAll.rule"
     filename: "OneRuleToRuleThemAll.rule"
-  - url: "https://github.com/carlospolop/winPE/blob/master/binaries/seatbelt/SeatbeltNet4AnyCPU.exe"
+  - url: "https://raw.githubusercontent.com/carlospolop/winPE/master/binaries/seatb\
+      elt/SeatbeltNet4AnyCPU.exe"
     filename: "SeatbeltNet4AnyCPU.exe"
-  - url: "https://github.com/andrew-d/static-binaries/raw/master/binaries/windows/x86/nmap.exe"
+  - url: "https://github.com/andrew-d/static-binaries/raw/master/binaries/windows/x\
+      86/nmap.exe"
     filename: "nmap.exe"
-  - url: "https://github.com/S1lkys/SharpKiller/releases/download/1.1/Sharp-Killer.exe"
+  - url: "https://github.com/S1lkys/SharpKiller/releases/download/1.1/Sharp-Killer.\
+      exe"
     filename: "Sharp-Killer.exe"
-  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/Certify.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/head\
+      s/master/dotnet%20v4.8.1%20compiled%20binaries/Certify.exe"
     filename: "Certify.exe"
-  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/SafetyKatz.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/head\
+      s/master/dotnet%20v4.8.1%20compiled%20binaries/SafetyKatz.exe"
     filename: "SafetyKatz.exe"
-  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/Seatbelt.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/head\
+      s/master/dotnet%20v4.8.1%20compiled%20binaries/Seatbelt.exe"
     filename: "Seatbelt.exe"
-  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/SharpUp.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/head\
+      s/master/dotnet%20v4.8.1%20compiled%20binaries/SharpUp.exe"
     filename: "SharpUp.exe"
-  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/heads/master/dotnet%20v4.8.1%20compiled%20binaries/Rubeus.exe"
+  - url: "https://github.com/r3motecontrol/Ghostpack-CompiledBinaries/raw/refs/head\
+      s/master/dotnet%20v4.8.1%20compiled%20binaries/Rubeus.exe"
     filename: "Rubeus.exe"
 
 cargo_tools:
-  - exa
+  - eza
   - rustcat
   - fd-find

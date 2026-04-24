@@ -1,5 +1,7 @@
 ---
-# defaults fallback; maintained values live in vars/main.yml
+# Legacy fallback defaults. The canonical/maintained values live in vars/main.yml,
+# which takes precedence. Only update this file if you need to change the fallback
+# for environments that do not override vars/main.yml.
 # download_binaries
 tools_dir: "/home/{{ ansible_user }}/Tools"
 peas_version: "20230319"
@@ -10,9 +12,11 @@ aquatone_version: "1.7.0"
 jython_version: "2.7.3"
 burpsuite_version: "2023.2.4"
 burp_binaries:
-  - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{ jython_version }}/jython-standalone-{{ jython_version }}.jar"
+  - url: "https://repo1.maven.org/maven2/org/python/jython-standalone/{{
+      jython_version }}/jython-standalone-{{ jython_version }}.jar"
     filename: "jython-standalone-{{ jython_version }}.jar"
-  - url: "https://portswigger-cdn.net/burp/releases/download?product=community&version={{ burpsuite_version }}&type=Jar"
+  - url: "https://portswigger-cdn.net/burp/releases/download?product=community&vers\
+      ion={{ burpsuite_version }}&type=Jar"
     filename: "burpsuite_{{ burpsuite_version }}.jar"
 
 # fix_evil-winrm
@@ -20,7 +24,8 @@ ruby_version: "3.1.2"
 
 # Github repos to clone
 github_repos:
-  - "https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git"
+  - "https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.\
+    git"
   - "https://github.com/diego-treitos/linux-smart-enumeration.git"
   - "https://github.com/mzet-/linux-exploit-suggester.git"
   - "https://github.com/rebootuser/LinEnum.git"
@@ -60,7 +65,7 @@ github_repos:
   - "https://github.com/flozz/p0wny-shell.git"
   - "https://github.com/antonioCoco/RunasCs.git"
   - "https://github.com/mrts/burp-suite-http-proxy-history-converter.git"
-  - "https://github.com/SecureAuthCorp/impacket.git"
+  - "https://github.com/fortra/impacket.git"
   - "https://github.com/The-Viper-One/ActiveDirectoryAttackTool.git"
   - "https://github.com/adrecon/ADRecon.git"
   - "https://github.com/WithSecureLabs/chainsaw.git"
@@ -131,7 +136,7 @@ golang_tools_repos:
   - github.com/ropnop/go-windapsearch/cmd/windapsearch
   # - github.com/projectdiscovery/cloudlist/cmd/cloudlist
 
-#  install_nvm
+  #  install_nvm
 nvm_version: "0.39.3"
 nvm_dir: "/home/{{ ansible_user }}/.nvm"
 
@@ -192,19 +197,27 @@ adenum_version: "main"
 windows_binaries:
   - url: "https://github.com/itm4n/FullPowers/releases/download/v0.1/FullPowers.exe"
     filename: "FullPowers.exe"
-  - url: "https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer64.exe"
+  - url: "https://github.com/itm4n/PrintSpoofer/releases/download/v1.0/PrintSpoofer\
+      64.exe"
     filename: "PrintSpoofer64.exe"
-  - url: "https://github.com/BeichenDream/GodPotato/releases/download/V1.20/GodPotato-NET4.exe"
+  - url: "https://github.com/BeichenDream/GodPotato/releases/download/V1.20/GodPota\
+      to-NET4.exe"
     filename: "GodPotato-NET4.exe"
-  - url: "https://github.com/antonioCoco/RoguePotato/releases/download/1.0/RoguePotato.zip"
+  - url: "https://github.com/antonioCoco/RoguePotato/releases/download/1.0/RoguePot\
+      ato.zip"
     filename: "RoguePotato.zip"
-  - url: "https://github.com/Flangvik/SharpCollection/blob/master/NetFramework_4.5_x64/SweetPotato.exe"
+  - url: "https://raw.githubusercontent.com/Flangvik/SharpCollection/master/NetFram\
+      ework_4.5_x64/SweetPotato.exe"
     filename: "SweetPotato.exe"
-  - url: "https://raw.githubusercontent.com/r3motecontrol/Ghostpack-CompiledBinaries/master/SharpUp.exe"
+  - url: "https://raw.githubusercontent.com/r3motecontrol/Ghostpack-CompiledBinarie\
+      s/master/SharpUp.exe"
     filename: "SharpUp.exe"
-  - url: "https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/master/OneRuleToRuleThemAll.rule"
+  - url: "https://raw.githubusercontent.com/NotSoSecure/password_cracking_rules/mas\
+      ter/OneRuleToRuleThemAll.rule"
     filename: "OneRuleToRuleThemAll.rule"
-  - url: "https://github.com/carlospolop/winPE/blob/master/binaries/seatbelt/SeatbeltNet4AnyCPU.exe"
+  - url: "https://raw.githubusercontent.com/carlospolop/winPE/master/binaries/seatb\
+      elt/SeatbeltNet4AnyCPU.exe"
     filename: "SeatbeltNet4AnyCPU.exe"
-  - url: "https://github.com/andrew-d/static-binaries/raw/master/binaries/windows/x86/nmap.exe"
+  - url: "https://github.com/andrew-d/static-binaries/raw/master/binaries/windows/x\
+      86/nmap.exe"
     filename: "nmap.exe"

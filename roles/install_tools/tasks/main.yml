@@ -52,7 +52,7 @@
 - name: Install FZF
   become: true
   become_user: "{{ ansible_user }}"
-  tags: docker
+  tags: fzf
   ansible.builtin.import_tasks: install_fzf.yml
 
 - name: Install Bloodhound

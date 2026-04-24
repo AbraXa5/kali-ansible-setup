@@ -22,11 +22,12 @@
   become_user: "{{ ansible_user }}"
   ansible.builtin.get_url:
     url: "{{ item }}"
-    dest: "/home/{{ ansible_user }}/Tools/Bloodhound-Collectors/{{ item | basename }}"
+    dest: "/home/{{ ansible_user }}/Tools/Bloodhound-Collectors/{{ item | basename
+      }}"
     mode: "0755"
   loop:
-    - https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.exe
-    - https://github.com/BloodHoundAD/BloodHound/blob/master/Collectors/SharpHound.ps1
+    - https://raw.githubusercontent.com/BloodHoundAD/BloodHound/master/Collectors/SharpHound.exe
+    - https://raw.githubusercontent.com/BloodHoundAD/BloodHound/master/Collectors/SharpHound.ps1
   # TODO: Find a better and idempotent way to do this, other than using stat
   # noqa: no-handler
   # when: create_collector_dir.changed
@@ -35,7 +36,8 @@
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.get_url:
-    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/v{{ bloodhound_version }}/BloodHound-{{ bloodhound_arch }}.zip"
+    url: "https://github.com/BloodHoundAD/BloodHound/releases/download/v{{
+      bloodhound_version }}/BloodHound-{{ bloodhound_arch }}.zip"
     dest: "/tmp/bloodhound-{{ bloodhound_arch }}.zip"
     mode: "0755"
   when: true
@@ -50,4 +52,5 @@
     dest: "/home/{{ ansible_user }}/Tools/"
     creates: "/home/{{ ansible_user }}/Tools/bloodhound-{{ bloodhound_arch }}"
   when: download_archive.changed
+
 # noqa: no-handler

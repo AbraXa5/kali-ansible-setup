@@ -38,6 +38,7 @@ Currently there are 5 roles
   - Customize firefox
 - **dotfiles**
   - Install my [dotfiles](https://github.com/AbraXa5/dotfiles) and necessary packages
+  - ~~Install starship prompt~~ _(disabled — interactive install script, requires manual setup)_
 - **first_run**
   - Enable https repos and set berkeley mirror in the sources
   - Change user shell to ZSH
@@ -53,12 +54,12 @@ Currently there are 5 roles
   - Install python tools using pipx
   - Install golang and go tools
   - Install cargo
-  - Install nvm and latest stable node
+  - ~~Install nvm and latest stable node~~ _(disabled — interactive install script issue)_
   - Install docker and pull necessary images
   - Install fzf and shell integrations
   - Install neo4j and bloodhound
   - Setup wordlists
-  - Fix Evil WinRM ruby
+  - ~~Fix Evil WinRM ruby~~ _(disabled — readline compatibility issue)_
   - Download Caido
   - Clean packages and cache
   - Update database for mlocate

@@ -4,6 +4,8 @@
 
 [![ascii-cast](https://asciinema.org/a/598965.svg)](https://asciinema.org/a/598965?data-speed="3")
 
+> _Note: the recording above may not reflect the current state of the playbook._
+
 ## Getting Started
 
 Ansible is required on the controller host to run the playbook
@@ -97,6 +99,8 @@ ansible-playbook main.yml --limit=kali.vm
 
 > If you don't want to save passwords in a file, the `--ask-become-pass` flag can be used at runtime. Ansible vault is also a good option
 
+> **Security note**: The shipped `hosts.ini` contains default Kali credentials (`kali`/`kali`). These should be changed before use. For shared or versioned inventories, use [Ansible Vault](https://docs.ansible.com/ansible/latest/vault_guide/index.html) to encrypt sensitive values instead of storing them in plaintext.
+
 #### Local Connection
 
 If you rather run the playbook locally on the VM that can be done by
@@ -128,7 +132,13 @@ kali.fwd   ansible_host=localhost   ansible_port=2222  ansible_user=kali  ansibl
 The playbook has multiple roles with multiple tasks
 
 - first_run
-  - Change Kali repo and add https support
+  - Enable https repos and set berkeley mirror in the sources
+  - Change user shell to ZSH
+  - Set timezone
+  - Regenerate SSH keys
+  - Update repos and full upgrade
+  - Clean cache and unwanted packages
+  - Update database for mlocate
 - dotfiles
   - Install my [dotfiles](https://github.com/AbraXa5/dotfiles)
 - install_tools
@@ -140,6 +150,8 @@ The playbook has multiple roles with multiple tasks
   - Clone my notes from private repos
 
 This playbook setups my VM as per my preferences, and also uses private keys in certain roles (for example, notes), so comment out/ remove the roles you don't want from `main.yml` or `setup_kali.yml`.
+
+> **`main.yml` vs `setup_kali.yml`**: `main.yml` is the recommended entrypoint — it uses conditional variables (`new_vm`, `setup_dotfiles`, `clone_notes`, `customize`) so you can selectively enable/disable roles at runtime. `setup_kali.yml` runs all 5 roles unconditionally and is intended for a full fresh setup.
 
 For roles needing private repos (dotfiles, notes), ensure the controller has SSH access to those repos; use vault or runtime prompts instead of storing passwords in inventory if needed.
 
