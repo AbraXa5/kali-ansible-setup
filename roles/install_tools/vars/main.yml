@@ -91,6 +91,9 @@ github_repos:
   - "https://github.com/kozmer/log4j-shell-poc.git"
   - "https://github.com/nikita-yfh/OneShot-C.git"
   - "https://github.com/deeexcee-io/PowerShell-Reverse-Shell-Generator.git"
+  # AD — PKINIT / shadow credentials + Kerberos relay
+  - "https://github.com/dirkjanm/PKINITtools.git"
+  - "https://github.com/dirkjanm/krbrelayx.git"
 
 chisel_version: "1.11.5"
 chisel_platforms:
@@ -102,6 +105,28 @@ chisel_platforms:
     url: "https://github.com/jpillora/chisel/releases/download/v{{ chisel_version
       }}/chisel_{{ chisel_version }}_windows_amd64.gz"
     binary_name: "chisel_windows_amd64.exe"
+
+# gowitness — web screenshot tool (replaces archived aquatone)
+gowitness_version: "3.1.1"
+
+# ligolo-ng — modern TUN-based tunneling / pivoting tool
+ligolo_ng_version: "0.8.3"
+ligolo_ng_files:
+  - name: "proxy_linux_amd64"
+    url: "https://github.com/nicocha30/ligolo-ng/releases/download/v{{
+      ligolo_ng_version }}/ligolo-ng_proxy_{{ ligolo_ng_version
+      }}_linux_amd64.tar.gz"
+    creates: "ligolo-ng_proxy"
+  - name: "agent_linux_amd64"
+    url: "https://github.com/nicocha30/ligolo-ng/releases/download/v{{
+      ligolo_ng_version }}/ligolo-ng_agent_{{ ligolo_ng_version
+      }}_linux_amd64.tar.gz"
+    creates: "ligolo-ng_agent"
+  - name: "agent_windows_amd64"
+    url: "https://github.com/nicocha30/ligolo-ng/releases/download/v{{
+      ligolo_ng_version }}/ligolo-ng_agent_{{ ligolo_ng_version
+      }}_windows_amd64.zip"
+    creates: "ligolo-ng_agent.exe"
 
 # install_cargo
 cargo_dir: "/home/{{ ansible_user }}/.cargo"
@@ -146,6 +171,20 @@ golang_tools_repos:
   - github.com/projectdiscovery/katana/cmd/katana
   # XSS Scanner
   - github.com/hahwul/dalfox/v2
+  # Port scanner (fast, complements nmap; wraps nmap for full scan)
+  - github.com/projectdiscovery/naabu/v2/cmd/naabu
+  # DNS toolkit — resolve, brute, wildcard filter
+  - github.com/projectdiscovery/dnsx/cmd/dnsx
+  # OAST / out-of-band interaction server client
+  - github.com/projectdiscovery/interactsh/cmd/interactsh-client
+  # Subdomain permutation & alteration engine
+  - github.com/projectdiscovery/alterx/cmd/alterx
+  # CVE navigator CLI
+  - github.com/projectdiscovery/cvemap/cmd/cvemap
+  # Collect URLs from Wayback, Common Crawl, OTX, URLScan
+  - github.com/lc/gau/v2/cmd/gau
+  # Secrets / credential scanner (git repos, filesystems)
+  - github.com/trufflesecurity/trufflehog/v3/cmd/trufflehog
 
 #  install_nvm
 nvm_version: "0.40.4"
@@ -188,23 +227,25 @@ uv_tools:
   - pre-commit
   - certipy-ad
   - certsync
-  # - coercer
+  - coercer
   - pypykatz
   - aclpwn
   - arsenal-cli
   - isort
   - ruff
   - poetry
+  - pwntools # CTF binary exploitation toolkit
+  - manspider # SMB share spider / content search
 
 uv_git_tools:
   - name: ldeep
     src: git+https://github.com/franc-pentest/ldeep
   # - name: certi.py
   #   src: git+https://github.com/zer1t0/certi.git
-  # - name: pre2k
-  #   src: git+https://github.com/garrettfoster13/pre2k.git
-  # - name: DonPAPI
-  #   src: git+https://github.com/login-securite/DonPAPI.git
+  - name: pre2k
+    src: git+https://github.com/garrettfoster13/pre2k.git
+  - name: DonPAPI
+    src: git+https://github.com/login-securite/DonPAPI.git
   - name: bloodyAD
     src: git+https://github.com/CravateRouge/bloodyAD.git
   - name: autobloody
@@ -282,3 +323,5 @@ cargo_tools:
   - eza
   - rustcat
   - fd-find
+  - rustscan # fast port scanner; wraps nmap
+  - binsider # binary analysis TUI for CTF

